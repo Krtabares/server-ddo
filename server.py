@@ -241,8 +241,15 @@ async def login(request):
                 return response.json({"msg": "Usuario inactivo"}, status=430)
 
             session_activa = await getSessionToken(db,username)
+            
+            if session_activa:
+                return response.json({"msg": "Usuario ya se encuentra conectado por favor cierre todas las sesiones"}, status=435)
 
             access_token = JWT.create_access_token(identity=username)
+
+            expired_at = (datetime.now() + timedelta(minutes = 15))
+
+            await insertSessionToken(db, access_token, username, expired_at)
 
             if user['role'] == 'root' or user['role'] == 'sisAdm' or user['role'] == 'seller' :
                 return response.json({'access_token': access_token, 'user': user}, 200)
