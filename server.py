@@ -86,7 +86,7 @@ def get_oracle_db():
 
 @app.middleware('request')
 async def print_on_request(request):
-    db = get_oracle_db()
+    db = get_mysql_db()
     if  'authorization' in request.headers:
         access_token = request.headers['authorization'][7:]
         session = await getSessionTokenBySession(db, access_token)
