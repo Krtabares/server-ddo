@@ -199,10 +199,9 @@ async def getSessionTokenBySession(db, access_token ):
 
 async def udpSessionExpiredAt(db, access_token, expired_at ):
     c = db.cursor()
-
     sql = """UPDATE `session_token` SET `expired_at` = \'{expired_at}\', `renovated` = 1 WHERE `access_token` = \'{access_token}\';""".format(access_token=access_token, expired_at=expired_at)
-    print(sql)
     c.execute(sql)
+    c.commit()
     return 
 
 async def insertSessionToken(db, access_token, username, expired_at):
@@ -241,7 +240,7 @@ async def login(request):
                 return response.json({"msg": "Usuario inactivo"}, status=430)
 
             session_activa = await getSessionToken(db,username)
-            
+
             if session_activa:
                 return response.json({"msg": "Usuario ya se encuentra conectado por favor cierre todas las sesiones"}, status=435)
 
