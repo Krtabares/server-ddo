@@ -62,10 +62,13 @@ jinja = SanicJinja2(app)
 
 
 def get_mysql_db():
-    mongo_uri = "mongodb://127.0.0.1:27017/ddo"
-    client = AsyncIOMotorClient(mongo_uri)
-    db = client['ddo']
-    return db
+    connection  = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="root",
+        database="portal_ddo"
+        )
+    return connection
 
 def generate_session_pool():
     dsn_tns = cx_Oracle.makedsn(
