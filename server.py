@@ -268,7 +268,7 @@ async def login(request):
 # @compress.compress
 @doc.exclude(True)
 async def logout(request):
- data = request.json
+    data = request.json
     db = get_mysql_db()
     c = db.cursor() 
     sql = """DELETE FROM `session_token`
