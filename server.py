@@ -65,7 +65,7 @@ def get_mysql_db():
     connection  = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="root",
+        password="",
         database="portal_ddo"
         )
     return connection
