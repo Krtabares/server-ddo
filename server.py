@@ -201,7 +201,7 @@ async def udpSessionExpiredAt(db, access_token, expired_at ):
     c = db.cursor()
     sql = """UPDATE `session_token` SET `expired_at` = \'{expired_at}\', `renovated` = 1 WHERE `access_token` = \'{access_token}\';""".format(access_token=access_token, expired_at=expired_at)
     c.execute(sql)
-    c.commit()
+    db.commit()
     return 
 
 async def insertSessionToken(db, access_token, username, expired_at):
