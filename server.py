@@ -313,6 +313,29 @@ async def validate_token(request): # token: Token):
     ##print("valido")
     return response.json({'msg': "OK"}, status=200)
 
+async def getUserByEmail(db, email ):
+    c = db.cursor() 
+    sql = """SELECT * FROM user WHERE email =  \'{email}\' """.format(email=email)
+    c.execute(sql)
+    user = c.fetchone()
+    return user
+
+async def getUserByUsername(db, username ):
+    c = db.cursor() 
+    sql = """SELECT * FROM user WHERE username =  \'{username}\' """.format(username=username)
+    c.execute(sql)
+    user = c.fetchone()
+    return user
+
+# async def insertSessionToken(db, user):
+#     c = db.cursor() 
+#     sql = """INSERT INTO `usuarios`( `role`, `name`, `email`, `username`, `password`, `COD_CIA`, `GRUPO_CLIENTE`, `COD_CLIENTE`, `permisos`, `estatus`)
+#             VALUES
+#             #TODO (\'{access_token}\',\'{username}\',\'{expired_at}\', NOW())
+#             """.format(access_token=access_token,
+#             username=username,expired_at=expired_at)
+#     c.execute(sql)
+#     db.commit()
 
 @app.route('/add/user', ["POST", "GET"])
 # @compress.compress
@@ -322,13 +345,14 @@ async def addUser(request): # token: Token):
     user = request.json
     db = get_mysql_db()
 
-    userEmail = await db.user.find_one({'email': user.get("email", None)}, {'_id': 0})
+    # userEmail = await db.user.find_one({'email': user.get("email", None)}, {'_id': 0})
+    userEmail = await getUserByEmail(db,user.get("email", None) )
 
     if userEmail != None:
         return response.json({"msg": "Email no disponible"}, status=400)
 
-    username = await db.user.find_one({'username': user.get("username", None)}, {'_id': 0})
-
+    # username = await db.user.find_one({'username': user.get("username", None)}, {'_id': 0})
+    username = await getUserByUsername(db, user.get("username", None) )
     if username != None:
         return response.json({"msg": "Username no disponible"}, status=400)
 
