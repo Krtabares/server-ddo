@@ -272,7 +272,7 @@ async def logout(request):
     db = get_mysql_db()
     c = db.cursor() 
     sql = """DELETE FROM `session_token`
-	WHERE access_token =  \'{access_token}\' """.format(access_token=data.get("token", None)})
+	WHERE access_token =  \'{access_token}\' """.format(access_token=data.get("token", None))
     c.execute(sql)
     return response.json({"msg":"success"}, status=200)
 
