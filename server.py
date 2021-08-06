@@ -8,6 +8,7 @@ import requests
 import random
 import cx_Oracle
 import traceback
+import mysql.connector
 from datetime import datetime, timedelta, date
 from sanic import Sanic
 from sanic import response
