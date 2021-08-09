@@ -2220,9 +2220,9 @@ async def totales_pedido(db, idPedido):
         descImpuesto=c.var(str)
         totalNetoUSD=c.var(str)
         tipoCambio =c.var(str)
-        descPreEmpaque =c.var(str)
-        procVol =c.var(str)
-        procPP =c.var(str)
+        descPreEmpaque =c.var(int)
+        procVol =c.var(int)
+        procPP =c.var(int)
     
         l_result = c.callproc("""PROCESOSPW.totales_pedido""",[
             idPedido,
