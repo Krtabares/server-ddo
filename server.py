@@ -860,7 +860,7 @@ async def procedure(request):
             'disp_prod_emp': arr[20],
             'dir_imagen': arr[21],
             'division': arr[22],
-            'unidad_manejo':arr[23]
+            'unidad_manejo':arr[23],
             'pagina': arr[24],
             'linea': arr[25]
             }
