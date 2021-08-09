@@ -266,8 +266,9 @@ async def login(request):
                 }
                 client = await clientes(dbOracle, data)
                 return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli}, 200)
-    
-    return response.json({"msg": "Bad username or password"}, status=403)
+    else:
+
+        return response.json({"msg": "Usuario no existe"}, status=403)
 
 
 # @app.route("/logout", ["POST", "GET"])
@@ -1857,7 +1858,7 @@ async def del_detalle_producto(request): # token: Token):
 
         totales = await totales_pedido(db, int(data['id_pedido']))
 
-        await logAudit(data['username'], 'pedido', 'del', int(data['id_pedido']))
+        # await logAudit(data['username'], 'pedido', 'del', int(data['id_pedido']))
         pool.release(db)
         return response.json({"totales": totales},200)
     except Exception as e:
