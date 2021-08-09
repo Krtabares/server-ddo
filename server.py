@@ -2261,7 +2261,7 @@ async def totales_pedido(db, idPedido):
                 'tipoCambio':tipoCambio.getvalue(),
                 'descPreEmpaque': descPreEmpaque.getvalue(),
                 'procVol': procVol.getvalue(),
-                'procPP': provPP.getvalue()
+                'procPP': procPP.getvalue()
         }
 
         return obj
