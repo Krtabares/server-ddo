@@ -166,9 +166,8 @@ async def getUserbyUserName(db, username ):
             FROM usuarios WHERE username = \'{username}\' """.format(username=username)
     c.execute(sql,username)
     result = c.fetchone()
-
+    print(result)
     if result:
-
         user = {
             "id_user":result[0],
             "role":result[1],
@@ -267,7 +266,7 @@ async def login(request):
                 }
                 client = await clientes(dbOracle, data)
                 return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli}, 200)
-
+    
     return response.json({"msg": "Bad username or password"}, status=403)
 
 
