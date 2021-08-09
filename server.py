@@ -2207,25 +2207,25 @@ async def totales_pedido(db, idPedido):
         # db = get_oracle_db()
         c = db.cursor()
 
-        total_bruto=c.var(int)
-        desc_volumen=c.var(int)
-        otros_descuentos=c.var(int)
-        desc_adicional=c.var(int)
-        desc_dpp=c.var(int)
-        sub_total=c.var(int)
-        impuesto=c.var(int)
-        total=c.var(int)
-        totalGravado=c.var(int)
-        totalExento =c.var(int)
-        descImpuesto=c.var(int)
-        totalNetoUSD=c.var(int)
-        tipoCambio =c.var(int)
-        descPreEmpaque =c.var(int)
-        procVol =c.var(int)
-        procPP =c.var(int)
+        total_bruto=c.var(float)
+        desc_volumen=c.var(float)
+        otros_descuentos=c.var(float)
+        desc_adicional=c.var(float)
+        desc_dpp=c.var(float)
+        sub_total=c.var(float)
+        impuesto=c.var(float)
+        total=c.var(float)
+        totalGravado=c.var(float)
+        totalExento =c.var(float)
+        descImpuesto=c.var(float)
+        totalNetoUSD=c.var(float)
+        tipoCambio =c.var(float)
+        descPreEmpaque =c.var(float)
+        procVol =c.var(float)
+        procPP =c.var(float)
     
         l_result = c.callproc("""PROCESOSPW.totales_pedido""",[
-            idPedido,
+            int(idPedido),
             total_bruto,
             desc_volumen,
             otros_descuentos,
