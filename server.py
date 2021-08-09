@@ -166,19 +166,25 @@ async def getUserbyUserName(db, username ):
             FROM usuarios WHERE username = \'{username}\' """.format(username=username)
     c.execute(sql,username)
     result = c.fetchone()
-    user = {
-        "id_user":result[0],
-        "role":result[1],
-        "name" : result[2],
-        "email" : result[3],
-        "username" : result[4],
-        "password" : result[5],
-        "COD_CIA" : result[6],
-        "GRUPO_CLIENTE" : result[7],
-        "COD_CLIENTE" : result[8],
-        "permisos" : json.loads(result[9]),
-        "estatus" : result[10]
-    }
+
+    if result:
+
+        user = {
+            "id_user":result[0],
+            "role":result[1],
+            "name" : result[2],
+            "email" : result[3],
+            "username" : result[4],
+            "password" : result[5],
+            "COD_CIA" : result[6],
+            "GRUPO_CLIENTE" : result[7],
+            "COD_CLIENTE" : result[8],
+            "permisos" : json.loads(result[9]),
+            "estatus" : result[10]
+        }
+    else:
+
+        return None
 
     return user
 
