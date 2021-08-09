@@ -817,38 +817,23 @@ async def procedure(request):
     print(data)
     l_cur = c.var(cx_Oracle.CURSOR)
 
-    # l_result = c.callproc("""PROCESOSPW.productos""",[
-    #     l_cur,
-    #     data['pTotReg'],
-    #     data['pTotPaginas'],
-    #     data['pPagina'],
-    #     data['pLineas'],
-    #     data['pNoCia'],
-    #     data['pNoGrupo'],
-    #     data['pCliente'],
-    #     data['pBusqueda'],
-    #     data['pComponente'],
-    #     data['pArticulo'],
-    #     data['pFiltroCategoria'],
-    #     data['pCodProveedor'],
-    #     data['pExistencia']
-    #     ])[0]
+
     l_result = c.callproc("""PROCESOSPW.productos""",[
                 l_cur,
-        0, #data['pTotReg'],
-        0, #data['pTotPaginas'],
-        None, #data['pPagina'],
-        10, #data['pLineas'],
-        data['pNoCia'],
-        data['pNoGrupo'],
-        data['pCliente'],
-        data['pBusqueda'],
-        data['pComponente'],
-        data['pArticulo'],
-        data['pFiltroCategoria'],
-        data['pCodProveedor'],
-        None,#data['pExistencia']
-        ])[0]
+                0, #data['pTotReg'],
+                0, #data['pTotPaginas'],
+                None, #data['pPagina'],
+                10, #data['pLineas'],
+                data['pNoCia'],
+                data['pNoGrupo'],
+                data['pCliente'],
+                data['pBusqueda'],
+                data['pComponente'],
+                data['pArticulo'],
+                data['pFiltroCategoria'],
+                data['pCodProveedor'],
+                None,#data['pExistencia']
+                ])[0]
     list = []
     for arr in l_result:
         obj = {
@@ -875,8 +860,9 @@ async def procedure(request):
             'disp_prod_emp': arr[20],
             'dir_imagen': arr[21],
             'division': arr[22],
-            'pagina': arr[23],
-            'linea': arr[24]
+            'unidad_manejo':arr[23]
+            'pagina': arr[24],
+            'linea': arr[25]
             }
         list.append(obj)
 
@@ -2272,6 +2258,9 @@ async def totales_pedido(db, idPedido):
                 'descImpuesto':descImpuesto.getvalue(),
                 'totalNetoUSD':totalNetoUSD.getvalue(),
                 'tipoCambio':tipoCambio.getvalue(),
+                'descPreEmpaque': descPreEmpaque.getvalue(),
+                'procVol': procVol.getvalue(),
+                'procPP': provPP.getvalue()
         }
 
         return obj
