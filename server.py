@@ -266,6 +266,8 @@ async def login(request):
                 }
                 client = await clientes(dbOracle, data)
                 return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli}, 200)
+        else:
+            return response.json({"msg": "Contraseña invalida"}, status=403)
     else:
 
         return response.json({"msg": "Usuario no existe"}, status=403)
