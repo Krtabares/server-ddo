@@ -95,7 +95,7 @@ async def print_on_request(request):
             return response.json({"msg": "Sin sesion activa"}, status=401)
 
         present = datetime.now()
-        expired_at = (present + timedelta(minutes = 5))
+        expired_at = (present + timedelta(minutes = 15))
         await udpSessionExpiredAt(db, access_token, expired_at )
 
 
@@ -1859,7 +1859,7 @@ async def del_detalle_producto(request): # token: Token):
         totales = await totales_pedido(db, int(data['id_pedido']))
 
         # await logAudit(data['username'], 'pedido', 'del', int(data['id_pedido']))
-        pool.release(db)
+        # pool.release(db)
         return response.json({"totales": totales},200)
     except Exception as e:
         logger.debug(e)
