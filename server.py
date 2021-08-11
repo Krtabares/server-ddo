@@ -70,6 +70,15 @@ def get_mysql_db():
         )
     return connection
 
+def initEvents():
+    db = get_mysql_db()
+    c = db.cursor()
+    sql = """SET GLOBAL event_scheduler=\"ON\""""
+    c.execute(sql)
+    db.commit()
+
+initEvents()
+
 def generate_session_pool():
     dsn_tns = cx_Oracle.makedsn(
         '192.168.168.218', '1521', service_name='DELOESTE')
@@ -245,8 +254,6 @@ async def login(request):
                 return response.json({"msg": "Usuario inactivo"}, status=430)
 
             session_activa = await getSessionToken(db,username)
-            print("==================================================================================")
-            print(session_activa)
 
             if session_activa:
                 return response.json({"msg": "Usuario ya se encuentra conectado por favor cierre todas las sesiones"}, status=435)
