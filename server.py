@@ -245,6 +245,8 @@ async def login(request):
                 return response.json({"msg": "Usuario inactivo"}, status=430)
 
             session_activa = await getSessionToken(db,username)
+            print("==================================================================================")
+            print(session_activa)
 
             if session_activa:
                 return response.json({"msg": "Usuario ya se encuentra conectado por favor cierre todas las sesiones"}, status=435)
