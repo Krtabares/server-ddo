@@ -2239,9 +2239,10 @@ async def totales_pedido(db, idPedido):
         totalNetoUSD=c.var(int)
         tipoCambio =c.var(int)
         descPreEmpaque =c.var(int)
-        procVol =c.var(int)
-        procPP =c.var(int)
-    
+        porcVol =c.var(int)
+        porcPP =c.var(int)
+     
+     
         l_result = c.callproc("""PROCESOSPW.totales_pedido""",[
             int(idPedido),
             total_bruto,
@@ -2258,8 +2259,8 @@ async def totales_pedido(db, idPedido):
             totalNetoUSD,
             tipoCambio,
             descPreEmpaque,
-            procVol,
-            procPP
+            porcVol,
+            porcPP
             ])[0]
 
         obj = {
@@ -2277,8 +2278,8 @@ async def totales_pedido(db, idPedido):
                 'totalNetoUSD':totalNetoUSD.getvalue(),
                 'tipoCambio':tipoCambio.getvalue(),
                 'descPreEmpaque': descPreEmpaque.getvalue(),
-                'procVol': procVol.getvalue(),
-                'procPP': procPP.getvalue()
+                'porcVol': porcVol.getvalue(),
+                'porcPP': porcPP.getvalue()
         }
 
         return obj
