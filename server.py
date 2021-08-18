@@ -354,6 +354,76 @@ async def getUserByUsername(db, username ):
 #             username=username,expired_at=expired_at)
 #     c.execute(sql)
 #     db.commit()
+async def udpUser(db,user ):
+    c = db.cursor()
+    sql = """UPDATE `portal_ddo`.`usuarios`
+            SET
+            `role` = \"{role}\",
+            `name` = \"{name}\",
+            `email` = \"{email}\",
+            `username` = \"{username}\",
+            `password` = \"{password}\",
+            `COD_CIA` = \"{COD_CIA}\",
+            `GRUPO_CLIENTE` = \"{GRUPO_CLIENTE}\",
+            `COD_CLIENTE` = \"{COD_CLIENTE}\",
+            `permisos` = \"{permisos}\",
+            `estatus` = \"{estatus}\"
+            WHERE `username` = \"{username2}\";
+            """.format(role = user['role'],
+                name = user['name'],
+                email = user['email'],
+                username = user['username'],
+                password = user['password'],
+                COD_CIA = user['COD_CIA'],
+                GRUPO_CLIENTE = user['GRUPO_CLIENTE'],
+                COD_CLIENTE = user['COD_CLIENTE'],
+                permisos = user['permisos'],
+                estatus = user['estatus'],
+                username2= user['username'])
+    c.execute(sql)
+    db.commit()
+    return 
+
+async def insertUser(db, user):
+    c = db.cursor() 
+    sql = """INSERT INTO `portal_ddo`.`usuarios`
+                (
+                `role`,
+                `name`,
+                `email`,
+                `username`,
+                `password`,
+                `COD_CIA`,
+                `GRUPO_CLIENTE`,
+                `COD_CLIENTE`,
+                `permisos`,
+                `estatus`)
+                VALUES
+                (
+                \"{role}\",
+                \"{name}\",
+                \"{email}\",
+                \"{username}\",
+                \"{password}\",
+                \"{COD_CIA}\",
+                \"{GRUPO_CLIENTE}\",
+                \"{COD_CLIENTE}\",
+                \"{permisos}\",
+                \"{estatus}\");
+            """.format(
+                role = user['role'],
+                name = user['name'],
+                email = user['email'],
+                username = user['username'],
+                password = user['password'],
+                COD_CIA = user['COD_CIA'],
+                GRUPO_CLIENTE = user['GRUPO_CLIENTE'],
+                COD_CLIENTE = user['COD_CLIENTE'],
+                permisos = user['permisos'],
+                estatus = user['estatus']
+                )
+    c.execute(sql)
+    db.commit()
 
 @app.route('/add/user', ["POST", "GET"])
 # @compress.compress
@@ -386,7 +456,7 @@ async def addUser(request): # token: Token):
                           json.dumps(emailData)
                           )
 
-    await db.user.insert_one(user)
+    await insertUser(db, user)
 
     return response.json("OK", 200)
 
@@ -414,7 +484,8 @@ async def user_pass(request): # token: Token):
     user = request.json
     db = get_mysql_db()
 
-    await db.user.update_one({'username': user.get("username", None)}, {"$set": {'password': user.get("password", None)}})
+    # await db.user.update_one({'username': user.get("username", None)}, {"$set": {'password': user.get("password", None)}})
+    await udpUser(db,user)
 
     return response.json("OK", 200)
 
@@ -432,7 +503,78 @@ async def addUser(request): # token: Token):
     await db.user.delete_one({'username': user.get("username", None)})
 
     return response.json("OK", 200)
+def listUsersByRole(db, role):
+    c = db.cursor()
 
+
+    query = """ SELECT `usuarios`.`id_usuarios`,
+                            `usuarios`.`role`,
+                            `usuarios`.`name`,
+                            `usuarios`.`email`,
+                            `usuarios`.`username`,
+                            `usuarios`.`password`,
+                            `usuarios`.`COD_CIA`,
+                            `usuarios`.`GRUPO_CLIENTE`,
+                            `usuarios`.`COD_CLIENTE`,
+                            `usuarios`.`permisos`,
+                            `usuarios`.`estatus`
+                        FROM `portal_ddo`.`usuarios` WHERE role in({roles});
+                        """.format(roles)
+    #print(query)
+    c.execute(query)
+    list = []
+    for row in c:
+        aux = {}
+        aux = {
+            'id_usuarios' : row[0],
+            'role' : row[1],
+            'name' : row[2],
+            'email' : row[3],
+            'username' : row[4],
+            'password' : row[5],
+            'COD_CIA' : row[6],
+            'GRUPO_CLIENTE' : row[7],
+            'COD_CLIENTE' : row[8],
+            'permisos' : row[9],
+            'estatus' : row[10]
+            }
+        list.append(aux)
+
+def listUsersByClient(db, pCliente):
+        c = db.cursor()
+
+        query = """ SELECT `usuarios`.`id_usuarios`,
+                            `usuarios`.`role`,
+                            `usuarios`.`name`,
+                            `usuarios`.`email`,
+                            `usuarios`.`username`,
+                            `usuarios`.`password`,
+                            `usuarios`.`COD_CIA`,
+                            `usuarios`.`GRUPO_CLIENTE`,
+                            `usuarios`.`COD_CLIENTE`,
+                            `usuarios`.`permisos`,
+                            `usuarios`.`estatus`
+                        FROM `portal_ddo`.`usuarios` WHERE COD_CLIENTE = \'{pCliente}\';
+                        """.format(pCliente=pCliente)
+        #print(query)
+        c.execute(query)
+        list = []
+        for row in c:
+            aux = {}
+            aux = {
+                'id_usuarios' : row[0],
+                'role' : row[1],
+                'name' : row[2],
+                'email' : row[3],
+                'username' : row[4],
+                'password' : row[5],
+                'COD_CIA' : row[6],
+                'GRUPO_CLIENTE' : row[7],
+                'COD_CLIENTE' : row[8],
+                'permisos' : row[9],
+                'estatus' : row[10]
+                }
+            list.append(aux)
 
 @app.route('/get/users', ["POST", "GET"])
 # @compress.compress
@@ -448,16 +590,26 @@ async def listUser(request): # token: Token):
 
         if data['role'] == "root":
 
-            users = await db.user.find({'role': {'$in': ['root', 'sisAdm', 'seller']}}, {'_id': 0}).to_list(length=None)
+            # users = await db.user.find({'role': {'$in': ['root', 'sisAdm', 'seller']}}, {'_id': 0}).to_list(length=None)
+            users = await listUsersByRole(db,""" 'root', 'sisAdm', 'seller' """)
 
         if data['role'] == "sisAdm":
 
-            users = await db.user.find({'role': {'$in': ['sisAdm', 'seller']}}, {'_id': 0}).to_list(length=None)
+            # users = await db.user.find({'role': {'$in': ['sisAdm', 'seller']}}, {'_id': 0}).to_list(length=None)
+             users = await listUsersByRole(db,""" 'sisAdm', 'seller' """)
 
     else:
-        users = await db.user.find({'COD_CLIENTE': data['pCliente']}, {'_id': 0}).to_list(length=None)
+        # users = await db.user.find({'COD_CLIENTE': data['pCliente']}, {'_id': 0}).to_list(length=None)
+        users = await listUsersByClient(db, data['pCliente'])
 
     return response.json(users, 200)
+
+def getUser(db, username):
+    c = db.cursor() 
+    sql = """SELECT * FROM usuarios WHERE username =  \'{username}\' """.format(username=username)
+    c.execute(sql)
+    usr = c.fetchone()
+    return usr
 
 
 @app.route('/get/user', ["POST", "GET"])
@@ -468,7 +620,8 @@ async def availableUser(request): # token: Token):
     data = request.json
     db = get_mysql_db()
     # username = data.get("username", None)
-    users = await db.user.find_one({'username': data.get("username", None)}, {'_id': 0})
+    # users = await db.user.find_one({'username': data.get("username", None)}, {'_id': 0})
+    users = await getUser(db,data.get("username", None) )
 
     return response.json(users, 200)
 
@@ -481,7 +634,8 @@ async def availableUser(request): # token: Token):
     data = request.json
     db = get_mysql_db()
     # username = data.get("username", None)
-    users = await db.user.find_one({'username': data.get("username", None)}, {'_id': 0})
+    # users = await db.user.find_one({'username': data.get("username", None)}, {'_id': 0})
+    users  = None
 
     return response.json(users, 200)
 
@@ -494,8 +648,8 @@ async def availableUser(request): # token: Token):
     data = request.json
     db = get_mysql_db()
     # username = data.get("username", None)
-    users = await db.user.find_one({'email': data.get("email", None)}, {'_id': 0})
-
+    # users = await db.user.find_one({'email': data.get("email", None)}, {'_id': 0})
+    users = None
     return response.json(users, 200)
 
 
