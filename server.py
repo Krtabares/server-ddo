@@ -539,6 +539,7 @@ def listUsersByRole(db, role):
             'estatus' : row[10]
             }
         list.append(aux)
+    return list
 
 def listUsersByClient(db, pCliente):
         c = db.cursor()
@@ -575,6 +576,7 @@ def listUsersByClient(db, pCliente):
                 'estatus' : row[10]
                 }
             list.append(aux)
+        return list
 
 @app.route('/get/users', ["POST", "GET"])
 # @compress.compress
