@@ -535,7 +535,7 @@ def listUsersByRole(db, role):
             'COD_CIA' : row[6],
             'GRUPO_CLIENTE' : row[7],
             'COD_CLIENTE' : row[8],
-            'permisos' : row[9],
+            'permisos' : json.loads(row[9]),
             'estatus' : row[10]
             }
         list.append(aux)
@@ -572,7 +572,7 @@ def listUsersByClient(db, pCliente):
                 'COD_CIA' : row[6],
                 'GRUPO_CLIENTE' : row[7],
                 'COD_CLIENTE' : row[8],
-                'permisos' : row[9],
+                'permisos' : json.loads(row[9]),
                 'estatus' : row[10]
                 }
             list.append(aux)
