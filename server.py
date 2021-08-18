@@ -333,7 +333,7 @@ async def validate_token(request): # token: Token):
 
 async def getUserByEmail(db, email ):
     c = db.cursor() 
-    sql = """SELECT * FROM user WHERE email =  \'{email}\' """.format(email=email)
+    sql = """SELECT * FROM users WHERE email =  \'{email}\' """.format(email=email)
     c.execute(sql)
     user = c.fetchone()
     return user
