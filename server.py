@@ -519,7 +519,7 @@ def listUsersByRole(db, role):
                             `usuarios`.`permisos`,
                             `usuarios`.`estatus`
                         FROM `portal_ddo`.`usuarios` WHERE role in({role});
-                        """.format(roles)
+                        """.format(role=role)
     #print(query)
     c.execute(query)
     list = []
