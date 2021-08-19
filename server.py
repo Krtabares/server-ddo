@@ -160,7 +160,7 @@ async def availableUser(request):
     return response.json(result, 200)
 
 async def getUserbyUserName(db, username ):
-    c = db.cursor() 
+    c = db.cursor(buffered=True) 
     sql = """SELECT `id_usuarios`,
                 `role`,
                 `name`,
