@@ -415,7 +415,7 @@ async def insertUser(db, user):
                 \"{GRUPO_CLIENTE}\",
                 \"{COD_CLIENTE}\",
                 \"{estatus}\",
-                %s
+                \"%s\"
                 );
             """.format(
                 role = user['role'],
