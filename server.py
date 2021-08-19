@@ -413,7 +413,7 @@ async def insertUser(db, user):
                 \"{COD_CIA}\",
                 \"{GRUPO_CLIENTE}\",
                 \"{COD_CLIENTE}\",
-                \"{permisos}\",
+                %s,
                 \"{estatus}\");
             """.format(
                 role = user['role'],
@@ -424,11 +424,11 @@ async def insertUser(db, user):
                 COD_CIA = user['COD_CIA'],
                 GRUPO_CLIENTE = user['GRUPO_CLIENTE'],
                 COD_CLIENTE = user['COD_CLIENTE'],
-                permisos = user['permisos'],
+                # permisos = user['permisos'],
                 estatus = user['estatus']
                 )
     print(sql)
-    c.execute(sql)
+    c.execute(sql,user['permisos'] )
     db.commit()
 
 @app.route('/add/user', ["POST", "GET"])
