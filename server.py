@@ -625,7 +625,7 @@ def getUser(db, username):
     sql = """SELECT * FROM usuarios WHERE username =  \'{username}\' """.format(username=username)
     c.execute(sql)
     usr = c.fetchone()
-    usr['permisos'] =   json.loads(usr['permisos']) 
+    usr[9] =   json.loads(usr[9]) 
     return usr
 
 
