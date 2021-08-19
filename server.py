@@ -428,7 +428,7 @@ async def insertUser(db, user):
                 estatus = user['estatus']
                 )
     print(sql)
-    c.execute(sql,user['permisos'] )
+    c.execute(sql,json.loads( user['permisos']) )
     db.commit()
 
 @app.route('/add/user', ["POST", "GET"])
