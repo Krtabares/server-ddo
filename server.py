@@ -625,8 +625,24 @@ def getUser(db, username):
     sql = """SELECT * FROM usuarios WHERE username =  \'{username}\' """.format(username=username)
     c.execute(sql)
     usr = c.fetchone()
-    usr[9] =   json.loads(usr[9]) 
-    return usr
+    if usr[9]:
+        permisos = json.loads(row[9])
+    else:
+        permisos = None
+    aux = {
+                'id_usuarios' : row[0],
+                'role' : row[1],
+                'name' : row[2],
+                'email' : row[3],
+                'username' : row[4],
+                'password' : row[5],
+                'COD_CIA' : row[6],
+                'GRUPO_CLIENTE' : row[7],
+                'COD_CLIENTE' : row[8],
+                'permisos' : permisos,
+                'estatus' : row[10]
+                }
+    return aux
 
 
 @app.route('/get/user', ["POST", "GET"])
