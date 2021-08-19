@@ -175,7 +175,7 @@ async def getUserbyUserName(db, username ):
             FROM usuarios WHERE username = \'{username}\' """.format(username=username)
     c.execute(sql,username)
     result = c.fetchone()
-    print(result)
+    # print(result)
     if result:
         if result[9]:
             permisos = json.loads(result[9])
@@ -531,6 +531,10 @@ def listUsersByRole(db, role):
     list = []
     for row in c:
         aux = {}
+        if result[9]:
+            permisos = json.loads(result[9])
+        else:
+            permisos = None
         aux = {
             'id_usuarios' : row[0],
             'role' : row[1],
@@ -541,7 +545,7 @@ def listUsersByRole(db, role):
             'COD_CIA' : row[6],
             'GRUPO_CLIENTE' : row[7],
             'COD_CLIENTE' : row[8],
-            'permisos' : json.loads(row[9]),
+            'permisos' : permisos,
             'estatus' : row[10]
             }
         list.append(aux)
