@@ -531,8 +531,8 @@ def listUsersByRole(db, role):
     list = []
     for row in c:
         aux = {}
-        if result[9]:
-            permisos = json.loads(result[9])
+        if row[9]:
+            permisos = json.loads(row[9])
         else:
             permisos = None
         aux = {
