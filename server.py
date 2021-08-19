@@ -637,7 +637,7 @@ async def availableUser(request): # token: Token):
     db = get_mysql_db()
     # username = data.get("username", None)
     # users = await db.user.find_one({'username': data.get("username", None)}, {'_id': 0})
-    users = await getUser(db,data.get("username", None) )
+    users =  getUser(db,data.get("username", None) )
 
     return response.json(users, 200)
 
