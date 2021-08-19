@@ -401,8 +401,9 @@ async def insertUser(db, user):
                 `COD_CIA`,
                 `GRUPO_CLIENTE`,
                 `COD_CLIENTE`,
-                `permisos`,
-                `estatus`)
+                `estatus`,
+                `permisos`
+                )
                 VALUES
                 (
                 \"{role}\",
@@ -413,8 +414,9 @@ async def insertUser(db, user):
                 \"{COD_CIA}\",
                 \"{GRUPO_CLIENTE}\",
                 \"{COD_CLIENTE}\",
-                %s,
-                \"{estatus}\");
+                \"{estatus}\",
+                %s
+                );
             """.format(
                 role = user['role'],
                 name = user['name'],
