@@ -177,6 +177,11 @@ async def getUserbyUserName(db, username ):
     result = c.fetchone()
     print(result)
     if result:
+        if result[9]:
+            permisos = json.loads(result[9])
+        else:
+            permisos = None
+            
         user = {
             "id_user":result[0],
             "role":result[1],
@@ -187,7 +192,7 @@ async def getUserbyUserName(db, username ):
             "COD_CIA" : result[6],
             "GRUPO_CLIENTE" : result[7],
             "COD_CLIENTE" : result[8],
-            "permisos" : json.loads(result[9]),
+            "permisos" : permisos,
             "estatus" : result[10]
         }
     else:
