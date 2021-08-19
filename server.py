@@ -422,6 +422,7 @@ async def insertUser(db, user):
                 permisos = user['permisos'],
                 estatus = user['estatus']
                 )
+    print(sql)
     c.execute(sql)
     db.commit()
 
