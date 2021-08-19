@@ -424,7 +424,7 @@ async def insertUser(db, user):
                 COD_CIA = user['COD_CIA'],
                 GRUPO_CLIENTE = user['GRUPO_CLIENTE'],
                 COD_CLIENTE = user['COD_CLIENTE'],
-                permisos = user['permisos'],
+                permisos =json.dumps( user['permisos']),
                 estatus = user['estatus']
                 )
     print(sql)
