@@ -479,7 +479,8 @@ async def addUser(request): # token: Token):
 
     # await db.user.insert_one(user)
 
-    await db.user.replace_one({'username': user.get("username", None)}, user)
+    # await db.user.replace_one({'username': user.get("username", None)}, user)
+    await udpUser(db,user.get("username", None))
 
     return response.json("OK", 200)
 
