@@ -497,20 +497,26 @@ async def user_pass(request): # token: Token):
 
     return response.json("OK", 200)
 
-
+async def delUser(db, username):
+    c = db.cursor() 
+    sql = """DELETE FROM `usuarios` WHERE `usuarios`.`username` = \'{username}\'
+            """.format( username=username)
+    c.execute(sql)
+    db.commit()
 @app.route('/del/user', ["POST", "GET"])
 # @compress.compress
 @doc.exclude(True)
 #@jwt_required
-async def addUser(request): # token: Token):
+async def delUserProd(request): # token: Token):
     user = request.json
     db = get_mysql_db()
 
-    # await db.user.insert_one(user)
+    # await db.user.delete_one({'username': user.get("username", None)})
 
-    await db.user.delete_one({'username': user.get("username", None)})
+    await delUser(db,user.get("username", None) )
 
     return response.json("OK", 200)
+
 def listUsersByRole(db, role):
     c = db.cursor()
 
