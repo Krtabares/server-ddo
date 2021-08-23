@@ -371,7 +371,7 @@ async def udpUser(db,user ):
             `COD_CIA` = \"{COD_CIA}\",
             `GRUPO_CLIENTE` = \"{GRUPO_CLIENTE}\",
             `COD_CLIENTE` = \"{COD_CLIENTE}\",
-            `permisos` = \"{permisos}\",
+            `permisos` = \'{permisos}\',
             `estatus` = \"{estatus}\"
             WHERE `username` = \"{username2}\";
             """.format(role = user['role'],
