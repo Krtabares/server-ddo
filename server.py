@@ -127,10 +127,12 @@ async def availableUser(request):
     #print(data)
 
     if 'username' in data:
-        user = await db.user.find_one({'username': data['username']}, {'_id': 0})
+        # user = await db.user.find_one({'username': data['username']}, {'_id': 0})
+        user = await getUserbyUserName(db,data['username'])
 
-    elif user == None:
-        user = await db.user.find_one({'email': data['email']}, {'_id': 0})
+
+    # elif user == None:
+    #     user = await db.user.find_one({'email': data['email']}, {'_id': 0})
 
     else:
         response.json({"msg": "Missing username parameter"}, status=400)
@@ -138,7 +140,10 @@ async def availableUser(request):
     if user == None:
         response.json({"msg": "Missing username parameter"}, status=400)
 
-    await db.user.update_one({'username': data['username']}, {"$set": {'password': data["password"]}})
+    # await db.user.update_one({'username': data['username']}, {"$set": {'password': data["password"]}})
+    user['password'] = data["password"]
+
+    await udpUser(db,user)
 
     emailData = dict(
         template="",
@@ -946,7 +951,7 @@ async def procedure(request): # token: Token):
                 'codigo_cliente': arr[1],
                 'nombre_cliente': arr[2],
                 'tipo_venta': arr[3],
-                'fecha_vencimiento': dateByResponse(arr[3]),
+                'fecha_vencimiento': dateByResponse(arr[4]),
                 'monto_inicial': arr[5],
                 'monto_actual': arr[6],
                 'monto_inicial_usd': arr[7],
