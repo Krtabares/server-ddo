@@ -110,9 +110,9 @@ async def print_on_request(request):
 
 
 
-@app.middleware('response')
-async def print_on_response(request, response):
-    response.headers["env"] = env
+# @app.middleware('response')
+# async def print_on_response(request, response):
+#     response.data["env"] = env
 
 
 @app.route('/resetPass', ["POST", "GET"])
@@ -283,7 +283,7 @@ async def login(request):
                 "pCliente":user['COD_CLIENTE']
                 }
                 client = await clientes(dbOracle, data)
-                return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli}, 200)
+                return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli, "env": env }, 200)
         else:
             return response.json({"msg": "Contraseña invalida"}, status=403)
     else:
