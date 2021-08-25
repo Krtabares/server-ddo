@@ -70,7 +70,7 @@ def get_mysql_db():
         )
     return connection
 
-env = "Desarrollo"
+env = "Produccion"
 
 def generate_session_pool():
     if env == "Desarrollo":
