@@ -80,8 +80,11 @@ def initEvents():
 initEvents()
 
 def generate_session_pool():
+    # dsn_tns = cx_Oracle.makedsn(
+    #     '192.168.168.218', '1521', service_name='DELOESTE')
+
     dsn_tns = cx_Oracle.makedsn(
-        '192.168.168.218', '1521', service_name='DELOESTE')
+        '192.168.168.212', '1521', service_name='DELOESTE')
 
     return cx_Oracle.SessionPool(user=r'APLPAGWEB', password='4P1P4GWE3', dsn=dsn_tns, min=2,
                             max=5, increment=1, encoding="UTF-8")
