@@ -394,6 +394,19 @@ async def udpUser(db,user ):
     db.commit()
     return 
 
+async def udpUserPass(db,user ):
+    c = db.cursor()
+    sql = """UPDATE `portal_ddo`.`usuarios`
+            SET
+            `password` = \"{password}\",
+            WHERE `username` = \"{username2}\";
+            """.format(
+                password = user['password'],
+                username2= user['username'])
+    c.execute(sql)
+    db.commit()
+    return 
+
 async def insertUser(db, user):
     c = db.cursor() 
     sql = """INSERT INTO `portal_ddo`.`usuarios`
@@ -499,7 +512,7 @@ async def user_pass(request): # token: Token):
     db = get_mysql_db()
 
     # await db.user.update_one({'username': user.get("username", None)}, {"$set": {'password': user.get("password", None)}})
-    await udpUser(db,user)
+    await  udpUserPass(db,user)
 
     return response.json("OK", 200)
 
