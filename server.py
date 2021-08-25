@@ -143,7 +143,7 @@ async def availableUser(request):
     # await db.user.update_one({'username': data['username']}, {"$set": {'password': data["password"]}})
     user['password'] = data["password"]
 
-    await udpUser(db,user)
+    await udpUserPass(db,user)
 
     emailData = dict(
         template="",
