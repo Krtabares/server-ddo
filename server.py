@@ -274,7 +274,7 @@ async def login(request):
             await insertSessionToken(db, access_token, username, expired_at)
 
             if user['role'] == 'root' or user['role'] == 'sisAdm' or user['role'] == 'seller' :
-                return response.json({'access_token': access_token, 'user': user}, 200)
+                return response.json({'access_token': access_token, 'user': user, "env": env}, 200)
             else:
                 disponible_cli = await disponible_cliente(dbOracle,user['COD_CIA'],user['GRUPO_CLIENTE'],user['COD_CLIENTE'])
                 data ={
