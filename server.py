@@ -398,7 +398,7 @@ async def udpUserPass(db,user ):
     c = db.cursor()
     sql = """UPDATE `portal_ddo`.`usuarios`
             SET
-            `password` = \"{password}\",
+            `password` = \"{password}\"
             WHERE `username` = \"{username2}\";
             """.format(
                 password = user['password'],
