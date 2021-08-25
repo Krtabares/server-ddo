@@ -70,27 +70,24 @@ def get_mysql_db():
         )
     return connection
 
-def initEvents():
-    db = get_mysql_db()
-    c = db.cursor()
-    sql = """SET GLOBAL event_scheduler=\"ON\""""
-    c.execute(sql)
-    db.commit()
+env = "Desarrollo"
 
-initEvents()
-
-def generate_session_pool():
-    # desarrollo
-    dsn_tns = cx_Oracle.makedsn(
-        '192.168.168.218', '1521', service_name='DELOESTE')
-    # produccion
-    # dsn_tns = cx_Oracle.makedsn(
-    #     '192.168.168.212', '1521', service_name='DELOESTE')
+def generate_session_pool(env):
+    if env == "Desarrollo":
+        # desarrollo
+        dsn_tns = cx_Oracle.makedsn(
+            '192.168.168.218', '1521', service_name='DELOESTE')
+    elif env == "Produccion":
+        # produccion
+        dsn_tns = cx_Oracle.makedsn(
+            '192.168.168.212', '1521', service_name='DELOESTE')
 
     return cx_Oracle.SessionPool(user=r'APLPAGWEB', password='4P1P4GWE3', dsn=dsn_tns, min=2,
                             max=5, increment=1, encoding="UTF-8")
 
 pool = generate_session_pool()
+
+
 
 def get_oracle_db():
     connection = pool.acquire()
@@ -113,11 +110,9 @@ async def print_on_request(request):
 
 
 
-#@app.middleware('response')
+@app.middleware('response')
 async def print_on_response(request, response):
-    if response.status == 401:
-        db = get_mongo_db()
-        db.session_token.delete_many({'access_token':request.headers['authorization'][7:] })
+    response.headers["env"] = env
 
 
 @app.route('/resetPass', ["POST", "GET"])
