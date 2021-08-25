@@ -72,7 +72,7 @@ def get_mysql_db():
 
 env = "Desarrollo"
 
-def generate_session_pool(env):
+def generate_session_pool():
     if env == "Desarrollo":
         # desarrollo
         dsn_tns = cx_Oracle.makedsn(
