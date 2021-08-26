@@ -81,7 +81,6 @@ def getAPPconfig(db):
     for row in c:
         value  = json.loads(row[3])
         conf[row[1]] = value['value']
-    
 
 
 pool = None
@@ -93,7 +92,6 @@ def getBdInfo(db,name):
     bdInfo = {}
     for row in c:
         bdInfo={
-            "nombre":row[1]
             "ip":row[2],
             "puerto": row[3],
             "service_name":row[4],
@@ -102,22 +100,9 @@ def getBdInfo(db,name):
         }
     return bdInfo
 
-def listBdInfo(db):
-    c = db.cursor()
-    query = """SELECT * FROM `bases_de_datos` """
-    c.execute(query)
-    list = []
-    for row in c:
-        bdInfo={
-            "nombre":row[1]
-            "ip":row[2]
-        }
-        list.append(bdInfo)
-    return list
-
 def generate_session_pool(db):
     dbInfo = getBdInfo(db, conf['entorno'])
-    # pprint(dbInfo)
+    pprint(dbInfo)
     dsn_tns = cx_Oracle.makedsn(
             dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name'])
 
@@ -133,13 +118,13 @@ def get_oracle_db():
     connection = pool.acquire()
     return connection
 
-def mainInit():
-    
+def mainInit(pool):
+
     db = get_mysql_db()
     getAPPconfig(db)
     pool = generate_session_pool(db)
-
-mainInit()
+    return pool
+pool= mainInit(pool)
 
 @app.middleware('request')
 async def print_on_request(request):
@@ -211,7 +196,7 @@ async def availableUser(request):
     return response.json(result, 200)
 
 async def getUserbyUserName(db, username ):
-    c = db.cursor(buffered=True) 
+    c = db.cursor(buffered=True)
     sql = """SELECT `id_usuarios`,
                 `role`,
                 `name`,
@@ -232,7 +217,7 @@ async def getUserbyUserName(db, username ):
             permisos = json.loads(result[9])
         else:
             permisos = None
-            
+
         user = {
             "id_user":result[0],
             "role":result[1],
@@ -253,7 +238,7 @@ async def getUserbyUserName(db, username ):
     return user
 
 async def getSessionToken(db, username ):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """SELECT * FROM session_token WHERE username =  \'{username}\' """.format(username=username)
     print(sql)
     c.execute(sql)
@@ -261,7 +246,7 @@ async def getSessionToken(db, username ):
     return user
 
 async def getSessionTokenBySession(db, access_token ):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """SELECT * FROM session_token WHERE access_token =  \'{access_token}\' """.format(access_token=access_token)
     c.execute(sql)
     session_token = c.fetchone()
@@ -272,10 +257,10 @@ async def udpSessionExpiredAt(db, access_token, expired_at ):
     sql = """UPDATE `session_token` SET `expired_at` = \'{expired_at}\', `renovated` = 1 WHERE `access_token` = \'{access_token}\';""".format(access_token=access_token, expired_at=expired_at)
     c.execute(sql)
     db.commit()
-    return 
+    return
 
 async def insertSessionToken(db, access_token, username, expired_at):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """INSERT INTO `portal_ddo`.`session_token`
             (`access_token`,
             `username`,
@@ -286,7 +271,7 @@ async def insertSessionToken(db, access_token, username, expired_at):
             username=username,expired_at=expired_at)
     c.execute(sql)
     db.commit()
-     
+
 @app.route("/login", ["POST"])
 async def login(request):
     data = request.json
@@ -321,7 +306,7 @@ async def login(request):
             await insertSessionToken(db, access_token, username, expired_at)
 
             if user['role'] == 'root' or user['role'] == 'sisAdm' or user['role'] == 'seller' :
-                return response.json({'access_token': access_token, 'user': user, "env": env}, 200)
+                return response.json({'access_token': access_token, 'user': user, "env": conf['entorno']}, 200)
             else:
                 disponible_cli = await disponible_cliente(dbOracle,user['COD_CIA'],user['GRUPO_CLIENTE'],user['COD_CLIENTE'])
                 data ={
@@ -330,7 +315,7 @@ async def login(request):
                 "pCliente":user['COD_CLIENTE']
                 }
                 client = await clientes(dbOracle, data)
-                return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli, "env": env }, 200)
+                return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli, "env": conf['entorno'] }, 200)
         else:
             return response.json({"msg": "Contraseña invalida"}, status=403)
     else:
@@ -347,21 +332,13 @@ async def login(request):
 #     await db.session_token.delete_many({'access_token': data.get("token", None)})
 #     return response.json({"msg":"success"}, status=200)
 
-@app.route("/get/config", ["POST", "GET"])
-# @compress.compress
-@doc.exclude(True)
-async def logout(request):
-    db = get_mysql_db()
-    basesDeDatos = listBdInfo(db)
-    return response.json({"conf":conf, "basesDeDatos":basesDeDatos}, status=200)
-
 @app.route("/logout", ["POST", "GET"])
 # @compress.compress
 @doc.exclude(True)
 async def logout(request):
     data = request.json
     db = get_mysql_db()
-    c = db.cursor() 
+    c = db.cursor()
     sql = """DELETE FROM `session_token`
 	    WHERE access_token =  \'{access_token}\' """.format(access_token=data.get("token", None))
     c.execute(sql)
@@ -396,14 +373,14 @@ async def validate_token(request): # token: Token):
     return response.json({'msg': "OK"}, status=200)
 
 async def getUserByEmail(db, email ):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """SELECT * FROM usuarios WHERE email =  \'{email}\' """.format(email=email)
     c.execute(sql)
     user = c.fetchone()
     return user
 
 async def getUserByUsername(db, username ):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """SELECT * FROM usuarios WHERE username =  \'{username}\' """.format(username=username)
     c.execute(sql)
     user = c.fetchone()
@@ -438,7 +415,7 @@ async def udpUser(db,user ):
                 username2= user['username'])
     c.execute(sql)
     db.commit()
-    return 
+    return
 
 async def udpUserPass(db,user ):
     c = db.cursor()
@@ -451,10 +428,10 @@ async def udpUserPass(db,user ):
                 username2= user['username'])
     c.execute(sql)
     db.commit()
-    return 
+    return
 
 async def insertUser(db, user):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """INSERT INTO `portal_ddo`.`usuarios`
                 (
                 `role`,
@@ -563,7 +540,7 @@ async def user_pass(request): # token: Token):
     return response.json("OK", 200)
 
 async def delUser(db, username):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """DELETE FROM `usuarios` WHERE `usuarios`.`username` = \'{username}\'
             """.format( username=username)
     c.execute(sql)
@@ -694,7 +671,7 @@ async def listUser(request): # token: Token):
     return response.json(users, 200)
 
 def getUser(db, username):
-    c = db.cursor() 
+    c = db.cursor()
     sql = """SELECT * FROM usuarios WHERE username =  \'{username}\' """.format(username=username)
     c.execute(sql)
     row = c.fetchone()
@@ -2501,8 +2478,8 @@ async def totales_pedido(db, idPedido):
         descPreEmpaque =c.var(int)
         porcVol =c.var(int)
         porcPP =c.var(int)
-     
-     
+
+
         l_result = c.callproc("""PROCESOSPW.totales_pedido""",[
             int(idPedido),
             total_bruto,
