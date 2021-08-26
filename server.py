@@ -113,6 +113,7 @@ def mainInit():
     getAPPconfig()
     pool = generate_session_pool()
 
+mainInit()
 
 @app.middleware('request')
 async def print_on_request(request):
