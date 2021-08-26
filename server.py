@@ -104,7 +104,7 @@ def listBdInfo(db):
     c = db.cursor()
     query = """SELECT * FROM `bases_de_datos` """
     c.execute(query)
-    bdInfo = {}
+    bdInfo = []
     for row in c:
         bdInfo={
             "nombre": row[1],
