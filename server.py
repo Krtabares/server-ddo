@@ -101,16 +101,8 @@ def getBdInfo(db,name):
     return bdInfo
 
 def generate_session_pool(db):
-    # pprint(conf['entorno'])
     dbInfo = getBdInfo(db, conf['entorno'])
-    # if conf['entorno'] == "Desarrollo":
-    #     # desarrollo
-    #     dsn_tns = cx_Oracle.makedsn(
-    #         '192.168.168.218', '1521', service_name='DELOESTE')
-    # elif conf['entorno'] == "Produccion":
-    # #     # produccion
-    #     dsn_tns = cx_Oracle.makedsn(
-    #         '192.168.168.212', '1521', service_name='DELOESTE')
+    pprint(dbInfo)
     dsn_tns = cx_Oracle.makedsn(
             dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name'])
 
