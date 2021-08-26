@@ -325,7 +325,7 @@ async def login(request):
 
             if user['role'] == 'root' or user['role'] == 'sisAdm' or user['role'] == 'seller' :
                 # pprint(conf)
-                return response.json({'access_token': access_token, 'user': user, "env": conf['entorno']}, 200)
+                return response.json({'access_token': access_token, 'user': user, "env": variables_de_entorno['entorno']}, 200)
             else:
                 disponible_cli = await disponible_cliente(dbOracle,user['COD_CIA'],user['GRUPO_CLIENTE'],user['COD_CLIENTE'])
                 data ={
@@ -334,7 +334,7 @@ async def login(request):
                 "pCliente":user['COD_CLIENTE']
                 }
                 client = await clientes(dbOracle, data)
-                return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli, "env": conf['entorno'] }, 200)
+                return response.json({'access_token': access_token, 'user': user, 'cliente':client, 'disponible_cliente':disponible_cli, "env": variables_de_entorno['entorno'] }, 200)
         else:
             return response.json({"msg": "Contraseña invalida"}, status=403)
     else:
