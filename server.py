@@ -104,7 +104,7 @@ def listBdInfo(db):
     c = db.cursor()
     query = """SELECT * FROM `bases_de_datos` """
     c.execute(query)
-    bdInfo = []
+    list = []
     for row in c:
         bdInfo={
             "nombre": row[1],
@@ -114,6 +114,7 @@ def listBdInfo(db):
             "user": row[5],
             "pass":row[6],
         }
+        list.append(dbInfo)
     return bdInfo
 
 def generate_session_pool(db):
