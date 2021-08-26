@@ -81,6 +81,7 @@ def getAPPconfig(db):
     for row in c:
         value  = json.loads(row[3])
         conf[row[1]] = value['value']
+    
 
 
 pool = None
@@ -92,6 +93,7 @@ def getBdInfo(db,name):
     bdInfo = {}
     for row in c:
         bdInfo={
+            "nombre":row[1]
             "ip":row[2],
             "puerto": row[3],
             "service_name":row[4],
@@ -100,9 +102,22 @@ def getBdInfo(db,name):
         }
     return bdInfo
 
+def listBdInfo(db):
+    c = db.cursor()
+    query = """SELECT * FROM `bases_de_datos` """
+    c.execute(query)
+    list = []
+    for row in c:
+        bdInfo={
+            "nombre":row[1]
+            "ip":row[2]
+        }
+        list.append(bdInfo)
+    return list
+
 def generate_session_pool(db):
     dbInfo = getBdInfo(db, conf['entorno'])
-    pprint(dbInfo)
+    # pprint(dbInfo)
     dsn_tns = cx_Oracle.makedsn(
             dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name'])
 
@@ -331,6 +346,14 @@ async def login(request):
 #     data = request.json
 #     await db.session_token.delete_many({'access_token': data.get("token", None)})
 #     return response.json({"msg":"success"}, status=200)
+
+@app.route("/get/config", ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+async def logout(request):
+    db = get_mysql_db()
+    basesDeDatos = listBdInfo(db)
+    return response.json({"conf":conf, "basesDeDatos":basesDeDatos}, status=200)
 
 @app.route("/logout", ["POST", "GET"])
 # @compress.compress
