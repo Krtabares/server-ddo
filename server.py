@@ -377,7 +377,7 @@ async def validaSession(request):
 async def conf(request):
     db = get_mysql_db()
     databases = listBdInfo(db)
-    # hola
+    # hola holas2
     return response.json({"basesDeDatos":databases, "variables":conf}, status=200)
 
 
