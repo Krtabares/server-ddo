@@ -85,30 +85,48 @@ def getAPPconfig():
 
 
 pool = None
-def generate_session_pool():
-    pprint(conf['entorno'])
-    if conf['entorno'] == "Desarrollo":
-        # desarrollo
-        dsn_tns = cx_Oracle.makedsn(
-            '192.168.168.218', '1521', service_name='DELOESTE')
-    elif conf['entorno'] == "Produccion":
-        # produccion
-        dsn_tns = cx_Oracle.makedsn(
-            '192.168.168.212', '1521', service_name='DELOESTE')
 
-    return cx_Oracle.SessionPool(user=r'APLPAGWEB', password='4P1P4GWE3', dsn=dsn_tns, min=2,
+def getBdInfo(name):
+    db = get_mysql_db()
+    c = db.cursor()
+    query = """SELECT * FROM `bases_de_datos` WHERE `nombre` =  \'{name}\'""".format(name=name)
+    c.execute(query)
+    bdInfo = {}
+    for row in c:
+        bdInfo={
+            "ip":row[2],
+            "puerto": row[3],
+            "service_name":row[4],
+            "user": row[5],
+            "pass":row[6],
+        }
+    return bdInfo
+
+def generate_session_pool(db):
+    # pprint(conf['entorno'])
+    dbInfo = getBdInfo(conf['entorno'])
+    # if conf['entorno'] == "Desarrollo":
+    #     # desarrollo
+    #     dsn_tns = cx_Oracle.makedsn(
+    #         '192.168.168.218', '1521', service_name='DELOESTE')
+    # elif conf['entorno'] == "Produccion":
+    # #     # produccion
+    #     dsn_tns = cx_Oracle.makedsn(
+    #         '192.168.168.212', '1521', service_name='DELOESTE')
+    dsn_tns = cx_Oracle.makedsn(
+            dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name']')
+
+
+    return cx_Oracle.SessionPool(user=dbInfo['user'], password=dbInfo['pass'], dsn=dsn_tns, min=2,
                             max=5, increment=1, encoding="UTF-8")
-
 
 
 def poolReload():
     pool.close()
 
-
 def get_oracle_db():
     connection = pool.acquire()
     return connection
-
 
 def mainInit():
     getAPPconfig()
