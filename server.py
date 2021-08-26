@@ -74,8 +74,7 @@ def get_mysql_db():
     return connection
 
 
-def getAPPconfig():
-    db = get_mysql_db()
+def getAPPconfig(db):
     c = db.cursor()
     query = """ SELECT * FROM `configuraciones`"""
     c.execute(query)
@@ -86,8 +85,7 @@ def getAPPconfig():
 
 pool = None
 
-def getBdInfo(name):
-    db = get_mysql_db()
+def getBdInfo(db,name):
     c = db.cursor()
     query = """SELECT * FROM `bases_de_datos` WHERE `nombre` =  \'{name}\'""".format(name=name)
     c.execute(query)
@@ -104,7 +102,7 @@ def getBdInfo(name):
 
 def generate_session_pool(db):
     # pprint(conf['entorno'])
-    dbInfo = getBdInfo(conf['entorno'])
+    dbInfo = getBdInfo(db, conf['entorno'])
     # if conf['entorno'] == "Desarrollo":
     #     # desarrollo
     #     dsn_tns = cx_Oracle.makedsn(
@@ -129,8 +127,10 @@ def get_oracle_db():
     return connection
 
 def mainInit():
-    getAPPconfig()
-    pool = generate_session_pool()
+    
+    db = get_mysql_db()
+    getAPPconfig(db)
+    pool = generate_session_pool(db)
 
 mainInit()
 
