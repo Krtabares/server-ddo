@@ -82,7 +82,7 @@ def getAPPconfig():
     c.execute(query)
     list = []
     for row in c:
-        value  = json.loads(row[9])
+        value  = json.loads(row[3])
         conf[row[1]] = value['value']
 
     print(conf['entorno'])
