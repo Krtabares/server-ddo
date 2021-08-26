@@ -115,7 +115,7 @@ def listBdInfo(db):
             "pass":row[6],
         }
         list.append(dbInfo)
-    return bdInfo
+    return list
 
 def generate_session_pool(db):
     dbInfo = getBdInfo(db, conf['entorno'])
