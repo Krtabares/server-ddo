@@ -86,7 +86,7 @@ def getAPPconfig():
 
 pool = None
 def generate_session_pool():
-    pprint(conf)
+    pprint(conf['entorno'])
     if conf['entorno'] == "Desarrollo":
         # desarrollo
         dsn_tns = cx_Oracle.makedsn(
