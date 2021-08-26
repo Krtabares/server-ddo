@@ -61,8 +61,7 @@ jinja = SanicJinja2(app)
 
 conf = {
     "entorno" : None,
-    "refrescamiento_session" : None,
-
+    "refrescamiento_session" : None
 }
 
 def get_mysql_db():
@@ -80,23 +79,18 @@ def getAPPconfig():
     c = db.cursor()
     query = """ SELECT * FROM `configuraciones`"""
     c.execute(query)
-    list = []
     for row in c:
         value  = json.loads(row[3])
         conf[row[1]] = value['value']
 
-    print(conf['entorno'])
 
-getAPPconfig()
-
-env = "Desarrollo"
-
+pool = None
 def generate_session_pool():
-    if env == "Desarrollo":
+    if conf['entorno'] == "Desarrollo":
         # desarrollo
         dsn_tns = cx_Oracle.makedsn(
             '192.168.168.218', '1521', service_name='DELOESTE')
-    elif env == "Produccion":
+    elif conf['entorno'] == "Produccion":
         # produccion
         dsn_tns = cx_Oracle.makedsn(
             '192.168.168.212', '1521', service_name='DELOESTE')
@@ -104,7 +98,6 @@ def generate_session_pool():
     return cx_Oracle.SessionPool(user=r'APLPAGWEB', password='4P1P4GWE3', dsn=dsn_tns, min=2,
                             max=5, increment=1, encoding="UTF-8")
 
-pool = generate_session_pool()
 
 
 def poolReload():
@@ -114,6 +107,11 @@ def poolReload():
 def get_oracle_db():
     connection = pool.acquire()
     return connection
+
+
+def mainInit():
+    getAPPconfig()
+    pool = generate_session_pool()
 
 
 @app.middleware('request')
