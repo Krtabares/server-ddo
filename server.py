@@ -59,7 +59,11 @@ CORS(app, automatic_options=True)
 # Compress(app)
 jinja = SanicJinja2(app)
 
+conf = {
+    "entorno" : None,
+    "refrescamiento_session" : None,
 
+}
 
 def get_mysql_db():
     connection  = mysql.connector.connect(
@@ -69,6 +73,21 @@ def get_mysql_db():
         database="portal_ddo"
         )
     return connection
+
+
+def getAPPconfig():
+    db = get_mysql_db()
+    c = db.cursor()
+    query = """ SELECT * FROM `configuraciones`"""
+    c.execute(query)
+    list = []
+    for row in c:
+        value  = json.loads(row[9])
+        conf[row[1]] = value['value']
+
+    print(conf['entorno'])
+
+getAPPconfig()
 
 env = "Desarrollo"
 
@@ -87,6 +106,9 @@ def generate_session_pool():
 
 pool = generate_session_pool()
 
+
+def poolReload():
+    pool.close()
 
 
 def get_oracle_db():
@@ -354,15 +376,7 @@ async def getUserByUsername(db, username ):
     user = c.fetchone()
     return user
 
-# async def insertSessionToken(db, user):
-#     c = db.cursor() 
-#     sql = """INSERT INTO `usuarios`( `role`, `name`, `email`, `username`, `password`, `COD_CIA`, `GRUPO_CLIENTE`, `COD_CLIENTE`, `permisos`, `estatus`)
-#             VALUES
-#             #TODO (\'{access_token}\',\'{username}\',\'{expired_at}\', NOW())
-#             """.format(access_token=access_token,
-#             username=username,expired_at=expired_at)
-#     c.execute(sql)
-#     db.commit()
+
 async def udpUser(db,user ):
     c = db.cursor()
     sql = """UPDATE `portal_ddo`.`usuarios`
