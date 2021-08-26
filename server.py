@@ -381,7 +381,7 @@ async def getConf(request):
     db = get_mysql_db()
     databases = listBdInfo(db)
     pprint(databases)
-    return response.json({"basesDeDatos":databases, "variables":{}}, status=200)
+    return response.json({"basesDeDatos":databases, "variables": variables_de_entorno}, status=200)
 
 
 @app.route("/refresh_token", ["POST", "GET"])
