@@ -106,7 +106,7 @@ def listBdInfo(db):
     c.execute(query)
     list = []
     for row in c:
-        bdInfo={
+        dbInfo={
             "nombre": row[1],
             "ip":row[2],
             "puerto": row[3],
