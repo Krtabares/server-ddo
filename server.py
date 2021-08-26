@@ -100,6 +100,22 @@ def getBdInfo(db,name):
         }
     return bdInfo
 
+def listBdInfo(db):
+    c = db.cursor()
+    query = """SELECT * FROM `bases_de_datos` """
+    c.execute(query)
+    bdInfo = {}
+    for row in c:
+        bdInfo={
+            "nombre": row[1],
+            "ip":row[2],
+            "puerto": row[3],
+            "service_name":row[4],
+            "user": row[5],
+            "pass":row[6],
+        }
+    return bdInfo
+
 def generate_session_pool(db):
     dbInfo = getBdInfo(db, conf['entorno'])
     pprint(dbInfo)
@@ -354,6 +370,14 @@ async def validaSession(request):
     list=await  db.session_token.find({'expired_at': {'$gte': datetime.timestamp(now) }}).to_list(length=None)
     pprint(list)
     return response.json({"msg":"success"}, status=200)
+
+@app.route("/get/conf", ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+async def conf(request):
+    db = get_mysql_db()
+    databases = listBdInfo(db)
+    return response.json({"basesDeDatos":databases, "variables":conf}, status=200)
 
 
 @app.route("/refresh_token", ["POST", "GET"])
