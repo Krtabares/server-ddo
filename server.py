@@ -59,7 +59,7 @@ CORS(app, automatic_options=True)
 # Compress(app)
 jinja = SanicJinja2(app)
 
-conf = {
+variables_de_entorno = {
     "entorno" : None,
     "refrescamiento_session" : None
 }
@@ -80,7 +80,7 @@ def getAPPconfig(db):
     c.execute(query)
     for row in c:
         value  = json.loads(row[3])
-        conf[row[1]] = value['value']
+        variables_de_entorno[row[1]] = value['value']
 
 
 pool = None
@@ -118,7 +118,7 @@ def listBdInfo(db):
     return list
 
 def generate_session_pool(db):
-    dbInfo = getBdInfo(db, conf['entorno'])
+    dbInfo = getBdInfo(db, variables_de_entorno['entorno'])
     pprint(dbInfo)
     dsn_tns = cx_Oracle.makedsn(
             dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name'])
@@ -141,6 +141,7 @@ def mainInit(pool):
     getAPPconfig(db)
     pool = generate_session_pool(db)
     return pool
+
 pool= mainInit(pool)
 
 @app.middleware('request')
@@ -323,7 +324,7 @@ async def login(request):
             await insertSessionToken(db, access_token, username, expired_at)
 
             if user['role'] == 'root' or user['role'] == 'sisAdm' or user['role'] == 'seller' :
-                pprint(conf)
+                # pprint(conf)
                 return response.json({'access_token': access_token, 'user': user, "env": conf['entorno']}, 200)
             else:
                 disponible_cli = await disponible_cliente(dbOracle,user['COD_CIA'],user['GRUPO_CLIENTE'],user['COD_CLIENTE'])
@@ -376,7 +377,7 @@ async def validaSession(request):
 @app.route("/get/conf", ["POST", "GET"])
 # @compress.compress
 @doc.exclude(True)
-async def conf(request):
+async def getConf(request):
     db = get_mysql_db()
     databases = listBdInfo(db)
     pprint(databases)
