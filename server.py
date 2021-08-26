@@ -114,7 +114,7 @@ def generate_session_pool(db):
     #     dsn_tns = cx_Oracle.makedsn(
     #         '192.168.168.212', '1521', service_name='DELOESTE')
     dsn_tns = cx_Oracle.makedsn(
-            dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name']')
+            dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name'])
 
 
     return cx_Oracle.SessionPool(user=dbInfo['user'], password=dbInfo['pass'], dsn=dsn_tns, min=2,
