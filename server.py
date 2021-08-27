@@ -134,7 +134,7 @@ def generate_session_pool(db):
         pprint("entro en la exception")
         print("===============================================================================")
         pprint(pool)
-        
+        pool = None
         return response.json("ERROR", 500)
 
 
@@ -158,8 +158,9 @@ pool= mainInit(pool)
 @app.middleware('request')
 async def print_on_request(request):
     db = get_mysql_db()
+    print(pool)
     if not pool:
-          return response.json({"msg": "error"}, status=500)
+        return response.json({"msg": "error"}, status=500)
     if  'authorization' in request.headers:
         access_token = request.headers['authorization'][7:]
         session = await getSessionTokenBySession(db, access_token)
