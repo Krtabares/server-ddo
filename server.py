@@ -131,10 +131,7 @@ def generate_session_pool(db):
                             max=5, increment=1, encoding="UTF-8")
 
     except Exception as e:
-        pprint("entro en la exception")
-        print("===============================================================================")
         global pool
-        pprint(pool)
         pool = None
         return response.json("ERROR", 500)
 
@@ -158,6 +155,7 @@ pool= mainInit(pool)
 
 @app.middleware('request')
 async def print_on_request(request):
+    global pool
     db = get_mysql_db()
     print("midleware")
     print(pool)
