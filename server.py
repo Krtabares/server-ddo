@@ -403,7 +403,7 @@ def updConfig(db, id, data):
 @doc.exclude(True)
 #@jwt_required
 async def upd_enviroment(request):
-    data = request
+    data = request.json
     db = get_mysql_db()
     updConfig(db , 1,data['value'] )
     pool.close()
