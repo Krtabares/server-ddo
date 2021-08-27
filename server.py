@@ -131,10 +131,8 @@ def generate_session_pool(db):
                             max=5, increment=1, encoding="UTF-8")
 
     except Exception as e:
-        logger.debug(e)
         pprint(e)
-        # return response.json("ERROR", 400)
-        return 
+        return response.json("ERROR", 500)
 
 
 def poolReload():
