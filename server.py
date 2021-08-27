@@ -387,7 +387,8 @@ async def getConf(request):
 def updConfig(db, id, data):
     c = db.cursor()
 
-    value = { "value": data  }
+    # value = { "value": data  }
+    value = data
     sql = """UPDATE `configuraciones` SET `valor` =  \'{value}\' WHERE `configuraciones`.`id` = {id};
             """.format(
                 value = value,
