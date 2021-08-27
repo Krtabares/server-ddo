@@ -133,6 +133,7 @@ def generate_session_pool(db):
     except Exception as e:
         pprint("entro en la exception")
         print("===============================================================================")
+        global pool
         pprint(pool)
         pool = None
         return response.json("ERROR", 500)
