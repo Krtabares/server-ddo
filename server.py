@@ -155,6 +155,8 @@ pool= mainInit(pool)
 @app.middleware('request')
 async def print_on_request(request):
     db = get_mysql_db()
+    if not pool:
+          return response.json({"msg": "error"}, status=500)
     if  'authorization' in request.headers:
         access_token = request.headers['authorization'][7:]
         session = await getSessionTokenBySession(db, access_token)
