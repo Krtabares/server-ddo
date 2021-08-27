@@ -118,16 +118,16 @@ def listBdInfo(db):
     return list
 
 def generate_session_pool(db):
-    try
+    try:
 
-    dbInfo = getBdInfo(db, variables_de_entorno['entorno'])
-    pprint(dbInfo)
+        dbInfo = getBdInfo(db, variables_de_entorno['entorno'])
+        pprint(dbInfo)
 
-    dsn_tns = cx_Oracle.makedsn(
-            dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name'])
+        dsn_tns = cx_Oracle.makedsn(
+                dbInfo['ip'], dbInfo['puerto'], service_name=dbInfo['service_name'])
 
 
-    return cx_Oracle.SessionPool(user=dbInfo['user'], password=dbInfo['pass'], dsn=dsn_tns, min=2,
+        return cx_Oracle.SessionPool(user=dbInfo['user'], password=dbInfo['pass'], dsn=dsn_tns, min=2,
                             max=5, increment=1, encoding="UTF-8")
 
     except Exception as e:
