@@ -136,6 +136,7 @@ def generate_session_pool(db):
 
 
 def poolReload():
+    global pool
     pool.close()
 
 def get_oracle_db():
