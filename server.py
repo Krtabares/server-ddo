@@ -384,6 +384,34 @@ async def getConf(request):
     return response.json({"basesDeDatos":databases, "variables": variables_de_entorno}, status=200)
 
 
+def updConfig(db, id, data):
+    c = db.cursor()
+
+    value = { "value": data  }
+    sql = """UPDATE `configuraciones` SET `valor` =  \'{value}\' WHERE `configuraciones`.`id` = {id};
+            """.format(
+                value = value,
+                id = id
+                )
+    c.execute(sql)
+    db.commit()
+    return
+
+
+@app.route("/upd/enviroment", ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def upd_enviroment(request):
+    data = request
+    db = get_mysql_db()
+    updConfig(db , 1,data['value'] )
+    pool.close()
+    pool = mainInit(pool)
+    return response.json({ "env": variables_de_entorno['entorno']}, status=200)
+
+
+
 @app.route("/refresh_token", ["POST", "GET"])
 # @compress.compress
 @doc.exclude(True)
