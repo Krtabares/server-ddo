@@ -131,7 +131,10 @@ def generate_session_pool(db):
                             max=5, increment=1, encoding="UTF-8")
 
     except Exception as e:
-        pprint(e)
+        pprint("entro en la exception")
+        print("===============================================================================")
+        pprint(pool)
+        
         return response.json("ERROR", 500)
 
 
