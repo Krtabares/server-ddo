@@ -414,6 +414,7 @@ async def upd_enviroment(request):
     data = request.json
     db = get_mysql_db()
     updConfig(db , 1,data['value'] )
+    global pool
     poolReload()
     pool = mainInit(pool)
     return response.json({ "env": variables_de_entorno['entorno']}, status=200)
