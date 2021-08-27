@@ -158,6 +158,7 @@ pool= mainInit(pool)
 @app.middleware('request')
 async def print_on_request(request):
     db = get_mysql_db()
+    print("midleware")
     print(pool)
     if not pool:
         return response.json({"msg": "error"}, status=500)
