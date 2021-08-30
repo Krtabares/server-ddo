@@ -382,10 +382,7 @@ async def logout(request):
 # @compress.compress
 @doc.exclude(True)
 async def validaSession(request):
-    db = get_mysql_db()
-    now = datetime.now()
-    list=await  db.session_token.find({'expired_at': {'$gte': datetime.timestamp(now) }}).to_list(length=None)
-    pprint(list)
+
     return response.json({"msg":"success"}, status=200)
 
 @app.route("/get/conf", ["POST", "GET"])
