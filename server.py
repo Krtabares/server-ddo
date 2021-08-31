@@ -29,7 +29,7 @@ from email.header import Header
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from pprint import pprint
-
+import hashlib
 import http.client
 import json
 import multiprocessing
@@ -607,6 +607,25 @@ async def user_pass(request): # token: Token):
 
     # await db.user.update_one({'username': user.get("username", None)}, {"$set": {'password': user.get("password", None)}})
     await  udpUserPass(db,user)
+
+    return response.json("OK", 200)
+
+
+@app.route('/script/user_pass', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def user_passID(request): # token: Token):
+    c = db.cursor()
+    query = """ SELECT id_usuarios, identificacion FROM `portal_ddo`.`usuarios` WHERE id not in(1)"""
+    c.execute(query)
+    list = []
+    for row in c:
+        encdPass = hashlib.md5(row[0].encode())  
+        query1 = """UPDATE `usuarios` SET `password`= \'{pass}\' WHERE id_usuarios = {id}""".format(pass = result.hexdigest(), id=row[0])
+        c.execute(query1)
+        print(query1)
+        c.commit()
 
     return response.json("OK", 200)
 
