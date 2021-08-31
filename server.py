@@ -616,6 +616,7 @@ async def user_pass(request): # token: Token):
 @doc.exclude(True)
 #@jwt_required
 async def user_passID(request): # token: Token):
+    db = get_mysql_db()
     c = db.cursor()
     query = """ SELECT id_usuarios, identificacion FROM `portal_ddo`.`usuarios` WHERE id not in(1)"""
     c.execute(query)
