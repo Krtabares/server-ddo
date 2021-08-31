@@ -618,7 +618,7 @@ async def user_pass(request): # token: Token):
 async def user_passID(request): # token: Token):
     db = get_mysql_db()
     c = db.cursor()
-    query = """ SELECT id_usuarios, identificacion FROM `portal_ddo`.`usuarios` WHERE id not in(1)"""
+    query = """ SELECT id_usuarios, identificacion FROM `portal_ddo`.`usuarios` WHERE id_usuarios not in(1)"""
     c.execute(query)
     list = []
     for row in c:
