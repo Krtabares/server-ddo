@@ -622,7 +622,7 @@ async def user_passID(request): # token: Token):
     list = []
     for row in c:
         encdPass = hashlib.md5(row[0].encode())  
-        query1 = """UPDATE `usuarios` SET `password`= \'{pass}\' WHERE id_usuarios = {id}""".format(pass = result.hexdigest(), id=row[0])
+        query1 = """UPDATE `usuarios` SET `password`= \'{password}\' WHERE id_usuarios = {id}""".format(password = result.hexdigest(), id=row[0])
         c.execute(query1)
         print(query1)
         c.commit()
