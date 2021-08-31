@@ -630,7 +630,7 @@ async def user_passID(request): # token: Token):
         print(query1)
         c2.execute(query1)
        
-        c2.commit()
+        db.commit()
 
     return response.json("OK", 200)
 
