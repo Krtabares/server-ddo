@@ -621,13 +621,16 @@ async def user_passID(request): # token: Token):
     query = """ SELECT id_usuarios, identificacion FROM `portal_ddo`.`usuarios` WHERE id_usuarios not in(1)"""
     c.execute(query)
     list = []
+    c2 = db.cursor()
     for row in c:
+        
         ci = row[1]
         encdPass = hashlib.md5(ci.encode())  
         query1 = """UPDATE `usuarios` SET `password`= \'{password}\' WHERE id_usuarios = {id}""".format(password = encdPass.hexdigest(), id=row[0])
-        c.execute(query1)
         print(query1)
-        c.commit()
+        c2.execute(query1)
+       
+        c2.commit()
 
     return response.json("OK", 200)
 
