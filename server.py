@@ -1158,7 +1158,7 @@ async def procedure(request):
                 data['pArticulo'],
                 data['pFiltroCategoria'],
                 data['pCodProveedor'],
-                None,#data['pExistencia']
+                data['pExistencia'],
                 ])[0]
     list = []
     for arr in l_result:
