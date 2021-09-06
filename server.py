@@ -144,10 +144,18 @@ def get_oracle_db():
     connection = pool.acquire()
     return connection
 
+def initEvents(db):
+    c = db.cursor()
+    query = """SET GLOBAL event_scheduler=\'ON\' """
+    c.execute(query)
+    db.commit()
+
+
 def mainInit(pool):
 
     db = get_mysql_db()
     getAPPconfig(db)
+    initEvents(db)
     pool = generate_session_pool(db)
     return pool
 
