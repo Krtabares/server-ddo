@@ -1804,7 +1804,8 @@ async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega)
         cantidad = 0
 
         disponible = await existencia_disponible(db, pCia, detalle['COD_PRODUCTO'], detalle['CANTIDAD'], pBodega)
-
+        print("==================crear_detalle_pedido========disponible=======================")
+        print(disponible)
         if disponible == -1:
             return "No se pudo completar por favor verifique la disponibilidad del producto"
 
@@ -1992,6 +1993,8 @@ async def existencia_disponible(db, pCia, pNoArti, pCantidad, pBodega ):
         c = db.cursor()
         respuesta = None
         disponible = 0
+        print('==============existencia_disponible======pBodega=========================')
+        print(pBodega)
         sql = """SELECT PROCESOSPW.existencia_disponible (\'{pCia}\',\'{pNoArti}\',\'{pBodega}\' ) from dual""".format(
             pCia=pCia,
             pNoArti=pNoArti,
