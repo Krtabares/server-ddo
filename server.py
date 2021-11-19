@@ -1165,6 +1165,9 @@ async def procedure(request):
 
     if not 'pExistencia' in data or data['pExistencia'] == None:
         data['pExistencia'] = None
+    
+    if not 'pbodega' in data or data['pbodega'] == None:
+        data['pbodega'] = None
 
 
     ##print(data)
@@ -1191,6 +1194,7 @@ async def procedure(request):
                 data['pFiltroCategoria'],
                 data['pCodProveedor'],
                 data['pExistencia'],
+                data['pbodega']
                 ])[0]
     list = []
     for arr in l_result:

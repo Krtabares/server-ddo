@@ -4,12 +4,12 @@
 import hashlib
   
 # initializing string
-str2hash = "ddo.2017"
+str2hash = "14453481"
   
 # encoding GeeksforGeeks using encode()
 # then sending to md5()
-print(str2hash.encode())
-result = hashlib.md5(b''str2hash)
+# print(str2hash.encode())
+result = hashlib.md5(str2hash.encode())
   
 # printing the equivalent hexadecimal value.
 print("The hexadecimal equivalent of hash is : ", end ="")

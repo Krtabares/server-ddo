@@ -1,0 +1,15 @@
+aiohttp==3.7.4.post0
+aiosmtplib==1.1.6
+cx_Oracle==8.2.1
+gevent_socketio==0.3.6
+motor==2.5.0
+mysql_connector_repackaged==0.3.1
+requests==2.25.1
+sanic==21.3.4
+sanic_compress==0.1.1
+Sanic_Cors==1.0.0
+sanic_gzip==0.3.0
+sanic_jinja2==0.10.0
+Sanic_JWT_Extended==0.4.2
+sanic_openapi==0.6.2
+Unidecode==1.2.0
