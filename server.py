@@ -1797,13 +1797,13 @@ async def upd_detalle_producto_serv(request): # token: Token):
 
 
 
-async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente):
+async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega):
 
     try:
 
         cantidad = 0
 
-        disponible = await existencia_disponible(db, pCia, detalle['COD_PRODUCTO'], detalle['CANTIDAD'])
+        disponible = await existencia_disponible(db, pCia, detalle['COD_PRODUCTO'], detalle['CANTIDAD'], pBodega)
 
         if disponible == -1:
             return "No se pudo completar por favor verifique la disponibilidad del producto"
@@ -1986,15 +1986,16 @@ async def valida_art(db,pCia, pNoArti, pGrupo,pCliente,pCantidad,pPrecio,pIdPedi
         logger.debug(e)
 
 
-async def existencia_disponible(db, pCia, pNoArti, pCantidad ):
+async def existencia_disponible(db, pCia, pNoArti, pCantidad, pBodega ):
     try:
 
         c = db.cursor()
         respuesta = None
         disponible = 0
-        sql = """SELECT PROCESOSPW.existencia_disponible (\'{pCia}\',\'{pNoArti}\') from dual""".format(
+        sql = """SELECT PROCESOSPW.existencia_disponible (\'{pCia}\',\'{pNoArti}\',\'{pBodega}\' ) from dual""".format(
             pCia=pCia,
             pNoArti=pNoArti,
+            pBodega=pBodega
         )
         c.execute(sql)
 
@@ -2165,7 +2166,7 @@ async def add_detalle_producto(request): # token: Token):
         if not pedidoValido:
             return response.json({"msg": "NO PUEDE EDITAR ESTE PEDIDO"}, status=410)
 
-        respuesta = await crear_detalle_pedido( db,data['pedido'], data['ID'], data['pNoCia'], data['pNoGrupo'], data['pCliente'])
+        respuesta = await crear_detalle_pedido( db,data['pedido'], data['ID'], data['pNoCia'], data['pNoGrupo'], data['pCliente'] ,data['pBodega'])
 
         if isinstance(respuesta, str):
             return response.json({"msg": respuesta  }, 480)
