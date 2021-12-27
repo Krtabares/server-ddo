@@ -1169,6 +1169,12 @@ async def procedure(request):
     if not 'pbodega' in data or data['pbodega'] == None:
         data['pbodega'] = None
 
+    if not 'pCategoria' in data or data['pCategoria'] == None:
+        data['pCategoria'] = None
+        
+    if not 'pSubCategoria' in data or data['pSubCategoria'] == None:
+        data['pSubCategoria'] = None
+
 
     ##print(data)
     db = get_oracle_db()
@@ -1194,7 +1200,9 @@ async def procedure(request):
                 data['pFiltroCategoria'],
                 data['pCodProveedor'],
                 data['pExistencia'],
-                data['pbodega']
+                data['pbodega'],
+                data['pCategoria'],
+                data['pSubCategoria']
                 ])[0]
     list = []
     for arr in l_result:
@@ -2497,11 +2505,11 @@ async def log_errores(db,idPedido):
         return e
 
 
-@app.route('/get/categorias', ["POST", "GET"])
+@app.route('/get/clasificacion_tipo', ["POST", "GET"])
 # @compress.compress
 @doc.exclude(True)
 #@jwt_required
-async def filtros(request):#, token:Token):
+async def clasificacion_tipo(request):#, token:Token):
     try:
 
         db = get_oracle_db()
@@ -2526,6 +2534,68 @@ async def filtros(request):#, token:Token):
         logger.debug(e)
         return e
 
+@app.route('/get/categorias', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def categorias(request):#, token:Token):
+    try:
+
+        db = get_oracle_db()
+        c = db.cursor()
+
+        c.execute("""SELECT
+                    CODIGO, NOMBRE
+                    FROM PAGINAWEB.CATEGORIA
+                        """)
+        list = []
+        for row in c:
+            aux = {}
+            aux = {
+                    'CODIGO': row[0],
+                    'NOMBRE': row[1]
+                }
+
+            list.append(aux)
+
+        return response.json({"msj": "OK", "obj": list}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+@app.route('/get/sub_categorias', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def filtros(request):#, token:Token):
+    try:
+        data = request.json
+
+        if not 'codCategoria' in data:
+            return response.json({"msg": "Missing password parameter grupo"}, status=400)
+        else:
+            codCategoria =  data['codCategoria']
+        db = get_oracle_db()
+        c = db.cursor()
+
+        c.execute("""SELECT
+                    COD_SUBCATEGORIA, NOMBRE
+                    FROM PAGINAWEB.SUBCATEGORIA WHERE COD_SUBCATEGORIA = \'{codCategoria}\'
+                        """.format(codCategoria = codCategoria ) )
+        list = []
+        for row in c:
+            aux = {}
+            aux = {
+                    'CODIGO': row[0],
+                    'NOMBRE': row[1]
+                }
+
+            list.append(aux)
+
+        return response.json({"msj": "OK", "obj": list}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
 
 @app.route('/get/proveedores', ["POST", "GET"])
 # @compress.compress
