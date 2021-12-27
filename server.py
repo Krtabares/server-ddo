@@ -2307,7 +2307,7 @@ async def categorias(request):#, token:Token):
 async def filtros(request):#, token:Token):
     try:
         data = request.json
-
+        print(data)
         if not 'codCategoria' in data:
             return response.json({"msg": "Missing password parameter grupo"}, status=400)
         else:
