@@ -2316,7 +2316,7 @@ async def filtros(request):#, token:Token):
         c = db.cursor()
         sql="""SELECT
                     COD_SUBCATEGORIA, NOMBRE
-                    FROM PAGINAWEB.SUBCATEGORIA WHERE COD_SUBCATEGORIA = \'{codCategoria}\'
+                    FROM PAGINAWEB.SUBCATEGORIA WHERE COD_CATEGORIA = \'{codCategoria}\'
                         """.format(codCategoria = codCategoria )
         print(sql)
         c.execute(sql )
