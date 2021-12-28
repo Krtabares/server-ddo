@@ -2314,11 +2314,12 @@ async def filtros(request):#, token:Token):
             codCategoria =  data['codCategoria']
         db = get_oracle_db()
         c = db.cursor()
-
-        c.execute("""SELECT
+        sql="""SELECT
                     COD_SUBCATEGORIA, NOMBRE
                     FROM PAGINAWEB.SUBCATEGORIA WHERE COD_SUBCATEGORIA = \'{codCategoria}\'
-                        """.format(codCategoria = codCategoria ) )
+                        """.format(codCategoria = codCategoria )
+        print(sql)
+        c.execute(sql )
         list = []
         for row in c:
             aux = {}
