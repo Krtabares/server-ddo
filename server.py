@@ -2144,7 +2144,8 @@ async def procedure_pedidos(db, cia, grupo,cliente):
                   'cod_estatus': arr[4],
                   'estatus': arr[5],
                   'fecha_estatus': dateByResponse(arr[6]),
-                  'tipo_pedido': arr[7]
+                  'tipo_pedido': arr[7],
+                  'origen_pedido':arr[8]
 
                 }
             list.append(aux)
