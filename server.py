@@ -1888,7 +1888,8 @@ async def add_pedidoV2(request): # token: Token):
         data = request.json
 
         ID = await crear_pedido(request)
-
+        print("=============================================================================================")
+        print(ID)
         if ID == None:
             response.json("ERROR", 400)
 
