@@ -42,7 +42,7 @@ class CustomHandler(ErrorHandler):
 
 app = Sanic(__name__)
 # Compress(app)
-port = 3500
+port = 9500
 
 compress = Compress()
 sio = socketio.AsyncServer(async_mode='sanic')
@@ -69,7 +69,7 @@ def get_mysql_db():
         host="localhost",
         user="root",
         password="",
-        database="portal_ddo"
+        database="portal_ddo_dev"
         )
     return connection
 
