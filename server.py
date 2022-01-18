@@ -2457,6 +2457,8 @@ async def ofertas(request):#, token:Token):
 
         list = ofertasDisponibles(db)
 
+        pprint(list)
+
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
