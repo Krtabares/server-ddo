@@ -2472,6 +2472,7 @@ async def ofertasDisponibles(db):
         l_cur
         ])[0]
     list = []
+    pprint(l_result)
     for arr in l_result:
         obj = {
                 'no_cia': arr[0],
