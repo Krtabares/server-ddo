@@ -2453,7 +2453,6 @@ async def ofertas(request):#, token:Token):
     try:
 
         db = get_oracle_db()
-        c = db.cursor()
 
         list = ofertasDisponibles(db)
 
