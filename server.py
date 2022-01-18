@@ -2454,7 +2454,7 @@ async def ofertas(request):#, token:Token):
         print("=====================================ofertas===========================================")
         db = get_oracle_db()
 
-        list = ofertasDisponibles(db)
+        list = await ofertasDisponibles(db)
 
         pprint(list)
 
