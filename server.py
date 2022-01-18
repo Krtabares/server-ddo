@@ -2451,7 +2451,7 @@ async def totales_pedido(db, idPedido):
 #@jwt_required
 async def ofertas(request):#, token:Token):
     try:
-
+        print("=====================================ofertas===========================================")
         db = get_oracle_db()
 
         list = ofertasDisponibles(db)
@@ -2465,6 +2465,7 @@ async def ofertas(request):#, token:Token):
 
 async def ofertasDisponibles(db):
 
+    print("=====================================ofertasDisponibles===========================================")
     c = db.cursor()
     l_cur = c.var(cx_Oracle.CURSOR)
     l_result = c.callproc("""PROCESOSPW.ofertas_vigentes""",[
