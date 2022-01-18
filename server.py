@@ -2445,6 +2445,40 @@ async def totales_pedido(db, idPedido):
         logger.debug(e)
         return e
 
+@app.route('/get/ofertas', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def ofertas(request):#, token:Token):
+    try:
+
+        db = get_oracle_db()
+        c = db.cursor()
+
+        list = ofertasDisponibles(db)
+
+        return response.json({"msj": "OK", "obj": list}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+async def ofertasDisponibles(db):
+
+    c = db.cursor()
+    l_cur = c.var(cx_Oracle.CURSOR)
+    l_result = c.callproc("""PROCESOSPW.ofertas_vigentes""",[
+        l_cur
+        ])[0]
+    list = []
+    for arr in l_result:
+        obj = {
+                'no_cia': arr[0],
+                'id_oferta': arr[1],
+                'nombre_flayer': arr[2]
+            }
+        list.append(obj)
+
+    return list
 
 async def logAudit(user, module, accion, context):
 
