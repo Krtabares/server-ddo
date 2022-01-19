@@ -2479,7 +2479,7 @@ async def ofertasDisponibles(db):
         obj = {
                 'no_cia': arr[0],
                 'id_oferta': arr[1],
-                'nombre_flayer': arr[2]
+                'nombre_flayer':  arr[2].replace(' ', '%20')
             }
         list.append(obj)
 
