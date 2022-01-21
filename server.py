@@ -2490,6 +2490,7 @@ async def validaOfertas(request):#, token:Token):
     try:
         print("=====================================validaOfertas===========================================")
         data = request.json
+        print(data)
         if not 'pNoCia' in data:
             return response.json({"msg": "Missing  parameter cia"}, status=400)
         
