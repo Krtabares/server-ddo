@@ -2510,7 +2510,7 @@ async def validaOfertas(request):#, token:Token):
         return e
 
 async def validaOfertaWeb(db,cia,idOferta, idPedido):
-
+    print("=====================================validaOfertas===========================================")
     c = db.cursor()
     pMensaje = c.var(cx_Oracle.STRING)
     l_result = c.callproc("""PROCESOSPW.valida_oferta_web""",[
