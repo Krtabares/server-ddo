@@ -2495,10 +2495,10 @@ async def validaOfertas(request):#, token:Token):
             return response.json({"msg": "Missing  parameter cia"}, status=400)
         
         if not 'pOferta' in data:
-            return response.json({"msg": "Missing  parameter id ofertaHAAAA"}, status=400)
+            return response.json({"msg": "Missing  parameter id oferta"}, status=400)
         
         if not 'pPedido' in data:
-            return response.json({"msg": "Missing  parameter id pedidoAHHHSSSDD"}, status=400)
+            return response.json({"msg": "Missing  parameter id pedido"}, status=400)
 
         db = get_oracle_db()
 
