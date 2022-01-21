@@ -2502,7 +2502,7 @@ async def validaOfertas(request):#, token:Token):
 
         db = get_oracle_db()
 
-        mensaje = await validaOfertaWeb(db, data["pNoCia"],data["oferta"],data["pId_pedido"] )
+        mensaje = await validaOfertaWeb(db, data["pNoCia"],data["pOferta"],data["pPedido"] )
 
         return response.json({"msj": "OK", "obj": mensaje}, 200)
     except Exception as e:
