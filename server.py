@@ -2465,16 +2465,13 @@ async def ofertas(request):#, token:Token):
 
 async def ofertasDisponibles(db):
 
-    print("=====================================ofertasDisponibles===========================================")
     c = db.cursor()
     l_cur = c.var(cx_Oracle.CURSOR)
     l_result = c.callproc("""PROCESOSPW.ofertas_vigentes""",[
         l_cur
         ])[0]
     list = []
-    print("=========================================================================================")
-    print(l_result)
-    pprint(l_result)
+
     for arr in l_result:
         obj = {
                 'no_cia': arr[0],
@@ -2484,6 +2481,50 @@ async def ofertasDisponibles(db):
         list.append(obj)
 
     return list
+
+@app.route('/valida/ofertas', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def validaOfertas(request):#, token:Token):
+    try:
+        print("=====================================validaOfertas===========================================")
+        data = request.json
+        if not 'pNoCia' in data:
+            return response.json({"msg": "Missing password parameter cia"}, status=400)
+        
+        if not 'pId_oferta:' in data:
+            return response.json({"msg": "Missing password parameter id oferta"}, status=400)
+        
+        if not 'pId_pedido:' in data:
+            return response.json({"msg": "Missing password parameter id pedido"}, status=400)
+
+        db = get_oracle_db()
+
+        mensaje = await validaOfertaWeb(db, data["pNoCia"],data["pId_oferta"],data["pId_pedido"], )
+
+        return response.json({"msj": "OK", "obj": mensaje}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+async def validaOfertaWeb(db,cia,idOferta, idPedido):
+
+    c = db.cursor()
+    pMensaje = c.var(cx_Oracle.STRING)
+    l_result = c.callproc("""PROCESOSPW.valida_oferta_web""",[
+        cia,
+        idOferta,
+        idPedido,
+        pMensaje
+        ])[0]
+    list = []
+
+    obj = {
+            'mensaje':pMensaje.getvalue()
+        }
+        
+    return obj
 
 async def logAudit(user, module, accion, context):
 
