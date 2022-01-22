@@ -2527,6 +2527,44 @@ async def validaOfertaWeb(db,cia,idOferta, idPedido):
         
     return obj
 
+@app.route('/ofertas/pedido', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def desOfertaPedido(request):#, token:Token):
+    try:
+        print("=====================================desOfertaPedido===========================================")
+        data = request.json
+        print(data)
+        
+        if not 'pPedido' in data:
+            return response.json({"msg": "Missing  parameter id pedido"}, status=400)
+
+        db = get_oracle_db()
+
+        mensaje = await DesOfertaPedidoWeb(db,data["pPedido"] )
+
+        return response.json({"msj": "OK", "obj": mensaje}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+async def DesOfertaPedidoWeb(db,idPedido):
+    print("=====================================validaOfertas===========================================")
+    c = db.cursor()
+    pMensaje = c.var(cx_Oracle.STRING)
+    l_result = c.callproc("""PROCESOSPW.Des_oferta_pedido_web""",[
+        idPedido,
+        pMensaje
+        ])[0]
+    list = []
+
+    obj = {
+            'mensaje':pMensaje.getvalue()
+        }
+        
+    return obj
+
 async def logAudit(user, module, accion, context):
 
     db = get_mysql_db()
