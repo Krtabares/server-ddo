@@ -2093,12 +2093,12 @@ async def pedidosV2 (request): # token: Token):
         return response.json("ERROR", 400)
 
 
-async def procedure_detalle_pedidos(db,idPedido):
+async def procedure_detalle_pedidos(db,idPedido, origenPedido):
 
         c = db.cursor()
 
         l_cur = c.var(cx_Oracle.CURSOR)
-        l_result = c.callproc("""PROCESOSPW.detalle_pedidos_cargados""",[l_cur, idPedido])[0]
+        l_result = c.callproc("""PROCESOSPW.detalle_pedidos_cargados""",[l_cur, idPedido, origenPedido])[0]
 
         list = []
 
@@ -2147,7 +2147,6 @@ async def procedure_pedidos(db, cia, grupo,cliente):
                   'fecha_estatus': dateByResponse(arr[6]),
                   'tipo_pedido': arr[7],
                   'origen_pedido':arr[8]
-
                 }
             list.append(aux)
 
@@ -2170,14 +2169,18 @@ async def pedido (request): # token: Token):
         if not 'idPedido' in data or data['idPedido'] == 0:
             return response.json({"msg": "Missing ID parameter"}, status=400)
 
+        if not 'origenPedido' in data or data['origenPedido'] == 0:
+            return response.json({"msg": "Missing ID parameter"}, status=400)
+
         # mongodb = get_mysql_db()
 
         db = get_oracle_db()
         c = db.cursor()
 
-        pedidos = await procedure_detalle_pedidos(db, int(data['idPedido']))
-        totales = await totales_pedido(db, int(data['idPedido']))
+        pedidos = await procedure_detalle_pedidos(db, data['idPedido'], data['origenPedido'] )
+        totales = await totales_pedido(db, data['idPedido'], data['origenPedido'])
         errores = await log_errores(db, int(data['idPedido']))
+        ofertas = await DesOfertaPedidoWeb(db, int(data['idPedido']))
         query = """SELECT
                          COD_CIA, GRUPO_CLIENTE,
                         COD_CLIENTE, TO_CHAR(FECHA_CARGA, 'DD-MM-YYYY'), NO_PEDIDO_CODISA,
@@ -2186,7 +2189,7 @@ async def pedido (request): # token: Token):
                         join PAGINAWEB.ESTATUS t2
                             on t1.ESTATUS = t2.CODIGO
                         WHERE ID = {idPedido}
-                            """.format(idPedido = data['idPedido'] )
+                            """.format(idPedido = data['idPedido'] ) 
         c.execute(query)
 
         list = []
@@ -2204,6 +2207,7 @@ async def pedido (request): # token: Token):
                     'pedido': pedidos,
                     'errores': errores,
                     'totales': totales,
+                    'ofertas':ofertas
                 }
 
             list.append(aux)
@@ -2372,12 +2376,12 @@ async def totales(request):
 
     data = request.json
     db = get_oracle_db()
-    list = await totales_pedido(db, int(data['idPedido']))
+    list = await totales_pedido(db, data['idPedido'],data['origenPedido'] )
     pool.release(db)
     return response.json({"msj": "OK", "totales": list}, 200)
 
 
-async def totales_pedido(db, idPedido):
+async def totales_pedido(db, idPedido, origenPedido):
 
     try:
         # db = get_oracle_db()
@@ -2402,7 +2406,8 @@ async def totales_pedido(db, idPedido):
 
 
         l_result = c.callproc("""PROCESOSPW.totales_pedido""",[
-            int(idPedido),
+            idPedido,
+            origenPedido,
             total_bruto,
             desc_volumen,
             otros_descuentos,
@@ -2550,7 +2555,7 @@ async def desOfertaPedido(request):#, token:Token):
         return e
 
 async def DesOfertaPedidoWeb(db,idPedido):
-    print("=====================================validaOfertas===========================================")
+    print("=====================================DesOfertaPedidoWeb===========================================")
     c = db.cursor()
     pMensaje = c.var(cx_Oracle.STRING)
     l_result = c.callproc("""PROCESOSPW.Des_oferta_pedido_web""",[
