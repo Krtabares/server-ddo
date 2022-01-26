@@ -1920,7 +1920,7 @@ async def add_detalle_producto(request): # token: Token):
         if isinstance(respuesta, str):
             return response.json({"msg": respuesta  }, 480)
 
-        totales = await totales_pedido(db, int(data['ID']))
+        totales = await totales_pedido(db, int(data['ID']),"WEB")
 
         msg = 0
 
@@ -1961,7 +1961,7 @@ async def del_detalle_producto(request): # token: Token):
             ])
         db.commit()
 
-        totales = await totales_pedido(db, int(data['id_pedido']))
+        totales = await totales_pedido(db, int(data['id_pedido']), "WEB")
 
         # await logAudit(data['username'], 'pedido', 'del', int(data['id_pedido']))
         # pool.release(db)
