@@ -2083,7 +2083,7 @@ async def pedidosV2 (request): # token: Token):
         #     data['pCliente'] = "'"+data['pCliente']+"'"
         db = get_oracle_db()
 
-        list = await procedure_pedidos(db, data['pNoCia'], data['pNoGrupo'],data['pCliente'])
+        list = await procedure_pedidos(db, data['pNoCia'], data['pNoGrupo'],data['pCliente'], None)
 
         pool.release(db)
         return response.json({"data": list},200)
@@ -2126,13 +2126,17 @@ async def procedure_detalle_pedidos(db,idPedido, origenPedido):
 
         return list
 
-async def procedure_pedidos(db, cia, grupo,cliente):
+async def procedure_pedidos(db, cia, grupo,cliente, idPedido):
     try:
 
         c = db.cursor()
 
         l_cur = c.var(cx_Oracle.CURSOR)
-        l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,cia,grupo,cliente])[0]
+        
+        if idPedido == None:
+            l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,cia,grupo,cliente])[0]
+        else:
+            l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,idPedido])[0]
         list = []
 
         for arr in l_result:
@@ -2181,38 +2185,43 @@ async def pedido (request): # token: Token):
         totales = await totales_pedido(db, data['idPedido'], data['origenPedido'])
         errores = await log_errores(db, int(data['idPedido']))
         ofertas = await DesOfertaPedidoWeb(db, int(data['idPedido']))
-        query = """SELECT
-                         COD_CIA, GRUPO_CLIENTE,
-                        COD_CLIENTE, TO_CHAR(FECHA_CARGA, 'DD-MM-YYYY'), NO_PEDIDO_CODISA,
-                        OBSERVACIONES, t2.descripcion, ESTATUS, TIPO_PEDIDO
-                        FROM PAGINAWEB.PEDIDO t1
-                        join PAGINAWEB.ESTATUS t2
-                            on t1.ESTATUS = t2.CODIGO
-                        WHERE ID = {idPedido}
-                            """.format(idPedido = data['idPedido'] ) 
-        c.execute(query)
+        pedido = await procedure_pedidos(db, None, None,None, data['idPedido'])
+        # query = """SELECT
+        #                  COD_CIA, GRUPO_CLIENTE,
+        #                 COD_CLIENTE, TO_CHAR(FECHA_CARGA, 'DD-MM-YYYY'), NO_PEDIDO_CODISA,
+        #                 OBSERVACIONES, t2.descripcion, ESTATUS, TIPO_PEDIDO
+        #                 FROM PAGINAWEB.PEDIDO t1
+        #                 join PAGINAWEB.ESTATUS t2
+        #                     on t1.ESTATUS = t2.CODIGO
+        #                 WHERE ID = {idPedido}
+        #                     """.format(idPedido = data['idPedido'] ) 
+        # c.execute(query)
 
-        list = []
-        for row in c:
-            aux = {
-                    'no_cia': row[0],
-                    'grupo': row[1],
-                    'no_cliente': row[2],
-                    'fecha': row[3],
-                    'no_factu': row[4],
-                    'observacion': row[5],
-                    'estatus': row[6],
-                    'estatus_id': row[7],
-                    'tipo_pedido': row[8],
-                    'pedido': pedidos,
-                    'errores': errores,
-                    'totales': totales,
-                    'ofertas':ofertas
-                }
+        # list = []
+        # for row in c:
+        #     aux = {
+        #             'no_cia': row[0],
+        #             'grupo': row[1],
+        #             'no_cliente': row[2],
+        #             'fecha': row[3],
+        #             'no_factu': row[4],
+        #             'observacion': row[5],
+        #             'estatus': row[6],
+        #             'estatus_id': row[7],
+        #             'tipo_pedido': row[8],
+        #             'pedido': pedidos,
+        #             'errores': errores,
+        #             'totales': totales,
+        #             'ofertas':ofertas
+        #         }
 
-            list.append(aux)
+        #     list.append(aux)
+        pedido["pedido"]=pedidos
+        pedido["errores"]=errores
+        pedido["totales"]=totales
+        pedido["ofertas"]=ofertas
 
-        return response.json({"msj": "OK", "obj": list}, 200)
+        return response.json({"msj": "OK", "obj": pedido}, 200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
