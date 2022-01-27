@@ -2132,14 +2132,19 @@ async def procedure_pedidos(db, cia, grupo,cliente, idPedido):
         c = db.cursor()
 
         l_cur = c.var(cx_Oracle.CURSOR)
+
+        list = []
         
         if idPedido == None:
             l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,cia,grupo,cliente])[0]
         else:
             l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,idPedido])[0]
-        list = []
+        
+        
 
         for arr in l_result:
+
+            pprint(arr)
 
             aux = {
                 'ID': arr[0],
@@ -2184,7 +2189,7 @@ async def pedido (request): # token: Token):
         pedidos = await procedure_detalle_pedidos(db, data['idPedido'], data['origenPedido'] )
         totales = await totales_pedido(db, data['idPedido'], data['origenPedido'])
         errores = await log_errores(db, int(data['idPedido']))
-        # ofertas = await DesOfertaPedidoWeb(db, data['idPedido'])
+        ofertas = await DesOfertaPedidoWeb(db, data['idPedido'])
         pedido = await procedure_pedidos(db, None, None,None, data['idPedido'])
         # query = """SELECT
         #                  COD_CIA, GRUPO_CLIENTE,
