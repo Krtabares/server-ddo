@@ -2184,7 +2184,7 @@ async def pedido (request): # token: Token):
         pedidos = await procedure_detalle_pedidos(db, data['idPedido'], data['origenPedido'] )
         totales = await totales_pedido(db, data['idPedido'], data['origenPedido'])
         errores = await log_errores(db, int(data['idPedido']))
-        ofertas = await DesOfertaPedidoWeb(db, int(data['idPedido']))
+        ofertas = await DesOfertaPedidoWeb(db, data['idPedido'])
         pedido = await procedure_pedidos(db, None, None,None, data['idPedido'])
         # query = """SELECT
         #                  COD_CIA, GRUPO_CLIENTE,
