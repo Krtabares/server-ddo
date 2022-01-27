@@ -2571,7 +2571,6 @@ async def DesOfertaPedidoWeb(db,idPedido):
         idPedido,
         pMensaje
         ])[0]
-    list = []
 
     obj = {
             'mensaje':pMensaje.getvalue()
