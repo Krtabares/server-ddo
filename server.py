@@ -2141,10 +2141,8 @@ async def procedure_pedidos(db, cia, grupo,cliente, idPedido):
             l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,idPedido])[0]
         
         
-
+        aux = None;
         for arr in l_result:
-
-            pprint(arr)
 
             aux = {
                 'ID': arr[0],
@@ -2221,12 +2219,12 @@ async def pedido (request): # token: Token):
         #         }
 
         #     list.append(aux)
-        pedido["pedido"]=pedidos
-        pedido["errores"]=errores
-        pedido["totales"]=totales
-        pedido["ofertas"]=ofertas
+        pedido[0]["pedido"]=pedidos
+        pedido[0]["errores"]=errores
+        pedido[0]["totales"]=totales
+        pedido[0]["ofertas"]=ofertas
 
-        return response.json({"msj": "OK", "obj": pedido}, 200)
+        return response.json({"msj": "OK", "obj": pedido[0]}, 200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
