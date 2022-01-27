@@ -2150,6 +2150,7 @@ async def procedure_pedidos(db, cia, grupo,cliente, idPedido):
                   'direccion_cliente': arr[2],
                   'fecha_creacion':  dateByResponse(arr[3]),
                   'cod_estatus': arr[4],
+                  'estatus_id':arr[4],
                   'estatus': arr[5],
                   'fecha_estatus': dateByResponse(arr[6]),
                   'tipo_pedido': arr[7],
