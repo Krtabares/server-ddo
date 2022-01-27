@@ -2224,7 +2224,7 @@ async def pedido (request): # token: Token):
         pedido[0]["totales"]=totales
         pedido[0]["ofertas"]=ofertas
 
-        return response.json({"msj": "OK", "obj": pedido[0]}, 200)
+        return response.json({"msj": "OK", "obj": pedido}, 200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
