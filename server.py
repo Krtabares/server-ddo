@@ -1533,7 +1533,7 @@ async def upd_detalle_producto_serv(request): # token: Token):
 
         msg = 0
 
-        totales = await totales_pedido(db, int(data['ID']))
+        totales = await totales_pedido(db, data['ID'],"WEB")
 
         await upd_estatus_pedido(db,6, data['ID'])
 
