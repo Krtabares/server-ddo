@@ -1778,7 +1778,7 @@ async def valida_articulo(request): # token: Token):
         if respuesta != 1:
             return response.json({"msg": respuesta}, status=480)
         pool.release(db)
-        return response.json({"data": row},200)
+        return response.json({"data": respuesta},200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
@@ -2149,6 +2149,7 @@ async def procedure_pedidos(db, cia, grupo,cliente, idPedido):
                   'nombre_cliente': arr[1],
                   'direccion_cliente': arr[2],
                   'fecha_creacion':  dateByResponse(arr[3]),
+                  'fecha':dateByResponse(arr[3]),
                   'cod_estatus': arr[4],
                   'estatus_id':arr[4],
                   'estatus': arr[5],
@@ -2156,6 +2157,11 @@ async def procedure_pedidos(db, cia, grupo,cliente, idPedido):
                   'tipo_pedido': arr[7],
                   'origen_pedido':arr[8]
                 }
+
+        #             'no_cia': row[0],
+        #             'grupo': row[1],
+        #             'no_cliente': row[2],
+        #             'no_factu': row[4],
             list.append(aux)
 
 
