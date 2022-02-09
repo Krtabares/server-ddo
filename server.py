@@ -1872,6 +1872,21 @@ async def editar_pedido(request): # token: Token):
         logger.debug(e)
         return response.json("ERROR", 400)
 
+@app.route('/change_estatus_pedido', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def change_estatus_pedido(request): # token: Token):
+    try:
+        data = request.json
+        db = get_oracle_db
+        estatus = await upd_estatus_pedido(db,data['estatus'], data['ID'])
+        pool.release(db)
+        return response.json({"estatus" : estatus}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return response.json("ERROR", 400)
+
 @app.route('/add/pedido', ["POST","GET"])
 # @compress.compress
 @doc.exclude(True)
