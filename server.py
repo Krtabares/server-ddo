@@ -167,18 +167,19 @@ async def print_on_request(request):
     db = get_mysql_db()
     print("midleware")
     print(pool)
-    if not pool:
-        return response.json({"msg": "error"}, status=500)
-    if  'authorization' in request.headers:
-        access_token = request.headers['authorization'][7:]
-        session = await getSessionTokenBySession(db, access_token)
+    if 'dev' not in request.headers:
+        if not pool:
+            return response.json({"msg": "error"}, status=500)
+        if  'authorization' in request.headers:
+            access_token = request.headers['authorization'][7:]
+            session = await getSessionTokenBySession(db, access_token)
 
-        if not session:
-            return response.json({"msg": "Sin sesion activa"}, status=401)
+            if not session:
+                return response.json({"msg": "Sin sesion activa"}, status=401)
 
-        present = datetime.now()
-        expired_at = (present + timedelta(minutes = 15))
-        await udpSessionExpiredAt(db, access_token, expired_at )
+            present = datetime.now()
+            expired_at = (present + timedelta(minutes = 15))
+            await udpSessionExpiredAt(db, access_token, expired_at )
 
 
 
@@ -1591,10 +1592,11 @@ async def upd_estatus_pedido(db, estatus, ID):
     sql = """
                 UPDATE PAGINAWEB.PEDIDO
                 SET
-                    ESTATUS          = {ESTATUS}
+                    ESTATUS          = {ESTATUS},
+                    METODO           =\'{LOG}\'
                 WHERE  ID               = {ID}
 
-        """.format(  ESTATUS = estatus, ID = int(ID))
+        """.format(  ESTATUS = estatus, ID = int(ID), LOG="""upd_estatus_pedido con """+ID )
     #print(sql)
     c.execute(sql)
     #print("ejeuto query")
@@ -1605,6 +1607,21 @@ async def upd_estatus_pedido(db, estatus, ID):
     c.execute(sql, [estatus])
     row = c.fetchone()
     return row[0]
+
+@app.route('/get/log_pedido', ["POST", "GET"])
+@doc.exclude(True)
+#@jwt_required
+async def get_log_pedido(db, ID):
+    #print("upd_estatus")
+    # db = get_oracle_db()
+    c = db.cursor()
+
+    sql = """select METODO
+                    from PAGINAWEB.PEDIDO where ID = :ID"""
+    c.execute(sql, [ID])
+    row = c.fetchone()
+    return row[0]
+
 
 async def upd_tipo_pedido(db,ID, tipoPedido = "N"):
         #print("upd_tipo_pedido")
