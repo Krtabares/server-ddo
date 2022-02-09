@@ -1864,7 +1864,7 @@ async def editar_pedido(request): # token: Token):
 async def editar_pedido(request): # token: Token):
     try:
         data = request.json
-        db = get_oracle_db
+        db = get_oracle_db()
         estatus = await upd_estatus_pedido(db,5, data['ID'])
         pool.release(db)
         return response.json({"estatus" : estatus}, 200)
@@ -1879,7 +1879,7 @@ async def editar_pedido(request): # token: Token):
 async def change_estatus_pedido(request): # token: Token):
     try:
         data = request.json
-        db = get_oracle_db
+        db = get_oracle_db()
         estatus = await upd_estatus_pedido(db,data['estatus'], data['ID'])
         pool.release(db)
         return response.json({"estatus" : estatus}, 200)
