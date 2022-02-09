@@ -1589,6 +1589,15 @@ async def upd_estatus_pedido(db, estatus, ID):
     # db = get_oracle_db()
     c = db.cursor()
 
+    sql = """select ESTATUS
+                    from PAGINAWEB.PEDIDO where ID = :ID"""
+    c.execute(sql, [ID])
+
+    row = c.fetchone()
+
+    if row[0] == 4:
+        return
+
     sql = """
                 UPDATE PAGINAWEB.PEDIDO
                 SET
@@ -1597,9 +1606,7 @@ async def upd_estatus_pedido(db, estatus, ID):
                 WHERE  ID               = {ID}
 
         """.format(  ESTATUS = estatus, ID = int(ID), LOG="""upd_estatus_pedido con """+ID )
-    #print(sql)
     c.execute(sql)
-    #print("ejeuto query")
     db.commit()
     ##print("============================ejecuto======================")
     sql = """select descripcion
@@ -1947,7 +1954,7 @@ async def add_detalle_producto(request): # token: Token):
         # await upd_estatus_pedido(db,6, data['ID'])
 
         # await logAudit(data['username'], 'pedido', 'upd', int(data['ID']))
-
+        pool.release(db)
         return response.json({"msg": msg, "reserved": respuesta, "totales": totales },200)
     except Exception as e:
         logger.debug(e)
@@ -2248,6 +2255,8 @@ async def pedido (request): # token: Token):
         pedido[0]["totales"]=totales
         pedido[0]["ofertas"]=ofertas
 
+        pool.release(db)
+
         return response.json({"msj": "OK", "obj": pedido}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2307,7 +2316,7 @@ async def clasificacion_tipo(request):#, token:Token):
                 }
 
             list.append(aux)
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2336,7 +2345,7 @@ async def categorias(request):#, token:Token):
                 }
 
             list.append(aux)
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2371,7 +2380,7 @@ async def filtros(request):#, token:Token):
                 }
 
             list.append(aux)
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2497,8 +2506,8 @@ async def ofertas(request):#, token:Token):
 
         list = await ofertasDisponibles(db)
 
-        pprint(list)
-
+        # pprint(list)
+        pool.release(db)
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2544,7 +2553,7 @@ async def validaOfertas(request):#, token:Token):
         db = get_oracle_db()
 
         mensaje = await validaOfertaWeb(db, data["pNoCia"],data["pOferta"],data["pPedido"] )
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": mensaje}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2584,7 +2593,7 @@ async def desOfertaPedido(request):#, token:Token):
         db = get_oracle_db()
 
         mensaje = await DesOfertaPedidoWeb(db,data["pPedido"] )
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": mensaje}, 200)
     except Exception as e:
         logger.debug(e)
