@@ -165,8 +165,8 @@ pool= mainInit(pool)
 async def print_on_request(request):
     global pool
     db = get_mysql_db()
-    print("midleware")
-    print(pool)
+    # print("midleware")
+    # print(pool)
     if 'dev' not in request.headers:
         if not pool:
             return response.json({"msg": "error"}, status=500)
@@ -281,7 +281,7 @@ async def getUserbyUserName(db, username ):
 async def getSessionToken(db, username ):
     c = db.cursor()
     sql = """SELECT * FROM session_token WHERE username =  \'{username}\' """.format(username=username)
-    print(sql)
+    # print(sql)
     c.execute(sql)
     user = c.fetchone()
     return user
@@ -2637,5 +2637,5 @@ def formatFloatDdo(value):
     return x
 
 ssl = {'cert': 'conf/ssl.crt/server.crt', 'key': 'conf/ssl.key/sever.key'}
-app.run(host='0.0.0.0', port= port, debug = True, workers=workers)
+app.run(host='0.0.0.0', port= port, debug = False, workers=workers)
 # app.run(host='0.0.0.0', port = port, debug = False, ssl=ssl)
