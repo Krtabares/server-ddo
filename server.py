@@ -1597,7 +1597,7 @@ async def upd_estatus_pedido(db, estatus, ID):
 
     if row[0] == 4:
         return
-
+    db.commit()
     sql = """
                 UPDATE PAGINAWEB.PEDIDO
                 SET
