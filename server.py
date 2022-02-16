@@ -42,7 +42,7 @@ class CustomHandler(ErrorHandler):
 
 app = Sanic(__name__)
 # Compress(app)
-port = 9500
+port = 3501
 
 compress = Compress()
 sio = socketio.AsyncServer(async_mode='sanic')
