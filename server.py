@@ -2478,5 +2478,5 @@ def formatFloatDdo(value):
     return x
 
 ssl = {'cert': 'conf/ssl.crt/server.crt', 'key': 'conf/ssl.key/sever.key'}
-app.run(host='0.0.0.0', port= port, debug = True, workers=workers)
+app.run(host='127.0.0.1', port= port, debug = True, workers=workers)
 # app.run(host='0.0.0.0', port = port, debug = False, ssl=ssl)
