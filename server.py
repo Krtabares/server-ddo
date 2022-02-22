@@ -173,7 +173,7 @@ async def print_on_request(request):
         if  'authorization' in request.headers:
             access_token = request.headers['authorization'][7:]
             session = await getSessionTokenBySession(db, access_token)
-
+            pprint(session)
             if not session:
                 return response.json({"msg": "Sin sesion activa"}, status=401)
 
