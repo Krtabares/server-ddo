@@ -312,6 +312,7 @@ async def insertSessionToken(db, access_token, username, expired_at):
             """.format(access_token=access_token,
             username=username,expired_at=expired_at)
     pprint(sql)
+    
     c.execute(sql)
     db.commit()
 
