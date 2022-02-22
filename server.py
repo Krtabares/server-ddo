@@ -167,6 +167,7 @@ async def print_on_request(request):
     db = get_mysql_db()
     # print("midleware")
     # print(pool)
+    pprint(db)
     if 'dev' not in request.headers:
         if not pool:
             return response.json({"msg": "error"}, status=500)
