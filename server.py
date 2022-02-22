@@ -165,20 +165,21 @@ pool= mainInit(pool)
 async def print_on_request(request):
     global pool
     db = get_mysql_db()
-    print("midleware")
-    print(pool)
-    if not pool:
-        return response.json({"msg": "error"}, status=500)
-    if  'authorization' in request.headers:
-        access_token = request.headers['authorization'][7:]
-        session = await getSessionTokenBySession(db, access_token)
+    # print("midleware")
+    # print(pool)
+    if 'dev' not in request.headers:
+        if not pool:
+            return response.json({"msg": "error"}, status=500)
+        if  'authorization' in request.headers:
+            access_token = request.headers['authorization'][7:]
+            session = await getSessionTokenBySession(db, access_token)
 
-        if not session:
-            return response.json({"msg": "Sin sesion activa"}, status=401)
+            if not session:
+                return response.json({"msg": "Sin sesion activa"}, status=401)
 
-        present = datetime.now()
-        expired_at = (present + timedelta(minutes = 15))
-        await udpSessionExpiredAt(db, access_token, expired_at )
+            present = datetime.now()
+            expired_at = (present + timedelta(minutes = 15))
+            await udpSessionExpiredAt(db, access_token, expired_at )
 
 
 
@@ -280,7 +281,7 @@ async def getUserbyUserName(db, username ):
 async def getSessionToken(db, username ):
     c = db.cursor()
     sql = """SELECT * FROM session_token WHERE username =  \'{username}\' """.format(username=username)
-    print(sql)
+    # print(sql)
     c.execute(sql)
     user = c.fetchone()
     return user
@@ -1533,7 +1534,7 @@ async def upd_detalle_producto_serv(request): # token: Token):
 
         msg = 0
 
-        totales = await totales_pedido(db, int(data['ID']))
+        totales = await totales_pedido(db, data['ID'],"WEB")
 
         await upd_estatus_pedido(db,6, data['ID'])
 
@@ -1588,16 +1589,24 @@ async def upd_estatus_pedido(db, estatus, ID):
     # db = get_oracle_db()
     c = db.cursor()
 
+    sql = """select ESTATUS
+                    from PAGINAWEB.PEDIDO where ID = :ID"""
+    c.execute(sql, [ID])
+
+    row = c.fetchone()
+
+    if row[0] == 4:
+        return
+    db.commit()
     sql = """
                 UPDATE PAGINAWEB.PEDIDO
                 SET
-                    ESTATUS          = {ESTATUS}
+                    ESTATUS          = {ESTATUS},
+                    METODO           =\'{LOG}\'
                 WHERE  ID               = {ID}
 
-        """.format(  ESTATUS = estatus, ID = int(ID))
-    #print(sql)
+        """.format(  ESTATUS = estatus, ID = int(ID), LOG="""upd_estatus_pedido con """+ID )
     c.execute(sql)
-    #print("ejeuto query")
     db.commit()
     ##print("============================ejecuto======================")
     sql = """select descripcion
@@ -1605,6 +1614,21 @@ async def upd_estatus_pedido(db, estatus, ID):
     c.execute(sql, [estatus])
     row = c.fetchone()
     return row[0]
+
+@app.route('/get/log_pedido', ["POST", "GET"])
+@doc.exclude(True)
+#@jwt_required
+async def get_log_pedido(db, ID):
+    #print("upd_estatus")
+    # db = get_oracle_db()
+    c = db.cursor()
+
+    sql = """select METODO
+                    from PAGINAWEB.PEDIDO where ID = :ID"""
+    c.execute(sql, [ID])
+    row = c.fetchone()
+    return row[0]
+
 
 async def upd_tipo_pedido(db,ID, tipoPedido = "N"):
         #print("upd_tipo_pedido")
@@ -1778,7 +1802,7 @@ async def valida_articulo(request): # token: Token):
         if respuesta != 1:
             return response.json({"msg": respuesta}, status=480)
         pool.release(db)
-        return response.json({"data": row},200)
+        return response.json({"data": respuesta},200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
@@ -1840,8 +1864,23 @@ async def editar_pedido(request): # token: Token):
 async def editar_pedido(request): # token: Token):
     try:
         data = request.json
-        db = get_oracle_db
+        db = get_oracle_db()
         estatus = await upd_estatus_pedido(db,5, data['ID'])
+        pool.release(db)
+        return response.json({"estatus" : estatus}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return response.json("ERROR", 400)
+
+@app.route('/change_estatus_pedido', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def change_estatus_pedido(request): # token: Token):
+    try:
+        data = request.json
+        db = get_oracle_db()
+        estatus = await upd_estatus_pedido(db,data['estatus'], data['ID'])
         pool.release(db)
         return response.json({"estatus" : estatus}, 200)
     except Exception as e:
@@ -1920,7 +1959,7 @@ async def add_detalle_producto(request): # token: Token):
         if isinstance(respuesta, str):
             return response.json({"msg": respuesta  }, 480)
 
-        totales = await totales_pedido(db, int(data['ID']))
+        totales = await totales_pedido(db, int(data['ID']),"WEB")
 
         msg = 0
 
@@ -1930,7 +1969,7 @@ async def add_detalle_producto(request): # token: Token):
         # await upd_estatus_pedido(db,6, data['ID'])
 
         # await logAudit(data['username'], 'pedido', 'upd', int(data['ID']))
-
+        pool.release(db)
         return response.json({"msg": msg, "reserved": respuesta, "totales": totales },200)
     except Exception as e:
         logger.debug(e)
@@ -1961,7 +2000,7 @@ async def del_detalle_producto(request): # token: Token):
             ])
         db.commit()
 
-        totales = await totales_pedido(db, int(data['id_pedido']))
+        totales = await totales_pedido(db, int(data['id_pedido']), "WEB")
 
         # await logAudit(data['username'], 'pedido', 'del', int(data['id_pedido']))
         # pool.release(db)
@@ -2083,7 +2122,7 @@ async def pedidosV2 (request): # token: Token):
         #     data['pCliente'] = "'"+data['pCliente']+"'"
         db = get_oracle_db()
 
-        list = await procedure_pedidos(db, data['pNoCia'], data['pNoGrupo'],data['pCliente'])
+        list = await procedure_pedidos(db, data['pNoCia'], data['pNoGrupo'],data['pCliente'], None)
 
         pool.release(db)
         return response.json({"data": list},200)
@@ -2093,12 +2132,12 @@ async def pedidosV2 (request): # token: Token):
         return response.json("ERROR", 400)
 
 
-async def procedure_detalle_pedidos(db,idPedido):
+async def procedure_detalle_pedidos(db,idPedido, origenPedido):
 
         c = db.cursor()
 
         l_cur = c.var(cx_Oracle.CURSOR)
-        l_result = c.callproc("""PROCESOSPW.detalle_pedidos_cargados""",[l_cur, idPedido])[0]
+        l_result = c.callproc("""PROCESOSPW.detalle_pedidos_cargados""",[l_cur, idPedido, origenPedido])[0]
 
         list = []
 
@@ -2126,15 +2165,22 @@ async def procedure_detalle_pedidos(db,idPedido):
 
         return list
 
-async def procedure_pedidos(db, cia, grupo,cliente):
+async def procedure_pedidos(db, cia, grupo,cliente, idPedido):
     try:
 
         c = db.cursor()
 
         l_cur = c.var(cx_Oracle.CURSOR)
-        l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,cia,grupo,cliente])[0]
-        list = []
 
+        list = []
+        
+        if idPedido == None:
+            l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,cia,grupo,cliente])[0]
+        else:
+            l_result = c.callproc("""PROCESOSPW.pedidos_cargados""",[l_cur,idPedido])[0]
+        
+        
+        aux = None;
         for arr in l_result:
 
             aux = {
@@ -2142,13 +2188,19 @@ async def procedure_pedidos(db, cia, grupo,cliente):
                   'nombre_cliente': arr[1],
                   'direccion_cliente': arr[2],
                   'fecha_creacion':  dateByResponse(arr[3]),
+                  'fecha':dateByResponse(arr[3]),
                   'cod_estatus': arr[4],
+                  'estatus_id':arr[4],
                   'estatus': arr[5],
                   'fecha_estatus': dateByResponse(arr[6]),
                   'tipo_pedido': arr[7],
                   'origen_pedido':arr[8]
-
                 }
+
+        #             'no_cia': row[0],
+        #             'grupo': row[1],
+        #             'no_cliente': row[2],
+        #             'no_factu': row[4],
             list.append(aux)
 
 
@@ -2170,45 +2222,57 @@ async def pedido (request): # token: Token):
         if not 'idPedido' in data or data['idPedido'] == 0:
             return response.json({"msg": "Missing ID parameter"}, status=400)
 
+        if not 'origenPedido' in data or data['origenPedido'] == 0:
+            return response.json({"msg": "Missing ID parameter"}, status=400)
+
         # mongodb = get_mysql_db()
 
         db = get_oracle_db()
         c = db.cursor()
 
-        pedidos = await procedure_detalle_pedidos(db, int(data['idPedido']))
-        totales = await totales_pedido(db, int(data['idPedido']))
+        pedidos = await procedure_detalle_pedidos(db, data['idPedido'], data['origenPedido'] )
+        totales = await totales_pedido(db, data['idPedido'], data['origenPedido'])
         errores = await log_errores(db, int(data['idPedido']))
-        query = """SELECT
-                         COD_CIA, GRUPO_CLIENTE,
-                        COD_CLIENTE, TO_CHAR(FECHA_CARGA, 'DD-MM-YYYY'), NO_PEDIDO_CODISA,
-                        OBSERVACIONES, t2.descripcion, ESTATUS, TIPO_PEDIDO
-                        FROM PAGINAWEB.PEDIDO t1
-                        join PAGINAWEB.ESTATUS t2
-                            on t1.ESTATUS = t2.CODIGO
-                        WHERE ID = {idPedido}
-                            """.format(idPedido = data['idPedido'] )
-        c.execute(query)
+        ofertas = await DesOfertaPedidoWeb(db, data['idPedido'])
+        pedido = await procedure_pedidos(db, None, None,None, data['idPedido'])
+        # query = """SELECT
+        #                  COD_CIA, GRUPO_CLIENTE,
+        #                 COD_CLIENTE, TO_CHAR(FECHA_CARGA, 'DD-MM-YYYY'), NO_PEDIDO_CODISA,
+        #                 OBSERVACIONES, t2.descripcion, ESTATUS, TIPO_PEDIDO
+        #                 FROM PAGINAWEB.PEDIDO t1
+        #                 join PAGINAWEB.ESTATUS t2
+        #                     on t1.ESTATUS = t2.CODIGO
+        #                 WHERE ID = {idPedido}
+        #                     """.format(idPedido = data['idPedido'] ) 
+        # c.execute(query)
 
-        list = []
-        for row in c:
-            aux = {
-                    'no_cia': row[0],
-                    'grupo': row[1],
-                    'no_cliente': row[2],
-                    'fecha': row[3],
-                    'no_factu': row[4],
-                    'observacion': row[5],
-                    'estatus': row[6],
-                    'estatus_id': row[7],
-                    'tipo_pedido': row[8],
-                    'pedido': pedidos,
-                    'errores': errores,
-                    'totales': totales,
-                }
+        # list = []
+        # for row in c:
+        #     aux = {
+        #             'no_cia': row[0],
+        #             'grupo': row[1],
+        #             'no_cliente': row[2],
+        #             'fecha': row[3],
+        #             'no_factu': row[4],
+        #             'observacion': row[5],
+        #             'estatus': row[6],
+        #             'estatus_id': row[7],
+        #             'tipo_pedido': row[8],
+        #             'pedido': pedidos,
+        #             'errores': errores,
+        #             'totales': totales,
+        #             'ofertas':ofertas
+        #         }
 
-            list.append(aux)
+        #     list.append(aux)
+        pedido[0]["pedido"]=pedidos
+        pedido[0]["errores"]=errores
+        pedido[0]["totales"]=totales
+        pedido[0]["ofertas"]=ofertas
 
-        return response.json({"msj": "OK", "obj": list}, 200)
+        pool.release(db)
+
+        return response.json({"msj": "OK", "obj": pedido}, 200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
@@ -2267,7 +2331,7 @@ async def clasificacion_tipo(request):#, token:Token):
                 }
 
             list.append(aux)
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2296,7 +2360,7 @@ async def categorias(request):#, token:Token):
                 }
 
             list.append(aux)
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2331,7 +2395,7 @@ async def filtros(request):#, token:Token):
                 }
 
             list.append(aux)
-
+        pool.release(db)
         return response.json({"msj": "OK", "obj": list}, 200)
     except Exception as e:
         logger.debug(e)
@@ -2372,12 +2436,12 @@ async def totales(request):
 
     data = request.json
     db = get_oracle_db()
-    list = await totales_pedido(db, int(data['idPedido']))
+    list = await totales_pedido(db, data['idPedido'],data['origenPedido'] )
     pool.release(db)
     return response.json({"msj": "OK", "totales": list}, 200)
 
 
-async def totales_pedido(db, idPedido):
+async def totales_pedido(db, idPedido, origenPedido):
 
     try:
         # db = get_oracle_db()
@@ -2402,7 +2466,8 @@ async def totales_pedido(db, idPedido):
 
 
         l_result = c.callproc("""PROCESOSPW.totales_pedido""",[
-            int(idPedido),
+            idPedido,
+            origenPedido,
             total_bruto,
             desc_volumen,
             otros_descuentos,
@@ -2445,6 +2510,124 @@ async def totales_pedido(db, idPedido):
         logger.debug(e)
         return e
 
+@app.route('/get/ofertas', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def ofertas(request):#, token:Token):
+    try:
+        print("=====================================ofertas===========================================")
+        db = get_oracle_db()
+
+        list = await ofertasDisponibles(db)
+
+        # pprint(list)
+        pool.release(db)
+        return response.json({"msj": "OK", "obj": list}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+async def ofertasDisponibles(db):
+
+    c = db.cursor()
+    l_cur = c.var(cx_Oracle.CURSOR)
+    l_result = c.callproc("""PROCESOSPW.ofertas_vigentes""",[
+        l_cur
+        ])[0]
+    list = []
+
+    for arr in l_result:
+        obj = {
+                'no_cia': arr[0],
+                'id_oferta': arr[1],
+                'nombre_flayer':  arr[2].replace(' ', '%20')
+            }
+        list.append(obj)
+
+    return list
+
+@app.route('/valida/ofertas', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def validaOfertas(request):#, token:Token):
+    try:
+        print("=====================================validaOfertas===========================================")
+        data = request.json
+        print(data)
+        if not 'pNoCia' in data:
+            return response.json({"msg": "Missing  parameter cia"}, status=400)
+        
+        if not 'pOferta' in data:
+            return response.json({"msg": "Missing  parameter id oferta"}, status=400)
+        
+        if not 'pPedido' in data:
+            return response.json({"msg": "Missing  parameter id pedido"}, status=400)
+
+        db = get_oracle_db()
+
+        mensaje = await validaOfertaWeb(db, data["pNoCia"],data["pOferta"],data["pPedido"] )
+        pool.release(db)
+        return response.json({"msj": "OK", "obj": mensaje}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+async def validaOfertaWeb(db,cia,idOferta, idPedido):
+    print("=====================================validaOfertas===========================================")
+    c = db.cursor()
+    pMensaje = c.var(cx_Oracle.STRING)
+    l_result = c.callproc("""PROCESOSPW.valida_oferta_web""",[
+        cia,
+        idOferta,
+        idPedido,
+        pMensaje
+        ])[0]
+    list = []
+
+    obj = {
+            'mensaje':pMensaje.getvalue()
+        }
+        
+    return obj
+
+@app.route('/ofertas/pedido', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+#@jwt_required
+async def desOfertaPedido(request):#, token:Token):
+    try:
+        print("=====================================desOfertaPedido===========================================")
+        data = request.json
+        print(data)
+        
+        if not 'pPedido' in data:
+            return response.json({"msg": "Missing  parameter id pedido"}, status=400)
+
+        db = get_oracle_db()
+
+        mensaje = await DesOfertaPedidoWeb(db,data["pPedido"] )
+        pool.release(db)
+        return response.json({"msj": "OK", "obj": mensaje}, 200)
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+async def DesOfertaPedidoWeb(db,idPedido):
+    print("=====================================DesOfertaPedidoWeb===========================================")
+    c = db.cursor()
+    pMensaje = c.var(cx_Oracle.STRING)
+    l_result = c.callproc("""PROCESOSPW.Des_oferta_pedido_web""",[
+        idPedido,
+        pMensaje
+        ])[0]
+
+    obj = {
+            'mensaje':pMensaje.getvalue()
+        }
+        
+    return obj
 
 async def logAudit(user, module, accion, context):
 
@@ -2478,5 +2661,5 @@ def formatFloatDdo(value):
     return x
 
 ssl = {'cert': 'conf/ssl.crt/server.crt', 'key': 'conf/ssl.key/sever.key'}
-app.run(host='0.0.0.0', port= port, debug = True, workers=workers)
+app.run(host='0.0.0.0', port= port, debug = False, workers=workers)
 # app.run(host='0.0.0.0', port = port, debug = False, ssl=ssl)
