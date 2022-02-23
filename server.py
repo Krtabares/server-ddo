@@ -1350,7 +1350,8 @@ async def procedure(request):
         list.append(obj)
 
 
-    return response.json({"msj": "OK", "obj": agrupar_facturas(list)}, 200)
+    # return response.json({"msj": "OK", "obj": agrupar_facturas(list)}, 200)
+    return response.json({"msj": "OK", "obj": list}, 200)
 
 
 @app.route('/valida/client', ["POST", "GET"])
