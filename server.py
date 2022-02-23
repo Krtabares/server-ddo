@@ -64,6 +64,7 @@ variables_de_entorno = {
     "refrescamiento_session" : None
 }
 
+database_mysql = "portal_ddo_dev"
 def get_mysql_db():
     connection  = mysql.connector.connect(
         host="localhost",
@@ -303,7 +304,7 @@ async def udpSessionExpiredAt(db, access_token, expired_at ):
 
 async def insertSessionToken(db, access_token, username, expired_at):
     c = db.cursor()
-    sql = """INSERT INTO `portal_ddo`.`session_token`
+    sql = """INSERT INTO `session_token`
             (`access_token`,
             `username`,
             `expired_at`,create_at)
@@ -472,7 +473,7 @@ async def getUserByUsername(db, username ):
 
 async def udpUser(db,user ):
     c = db.cursor()
-    sql = """UPDATE `portal_ddo`.`usuarios`
+    sql = """UPDATE `usuarios`
             SET
             `role` = \"{role}\",
             `name` = \"{name}\",
@@ -502,7 +503,7 @@ async def udpUser(db,user ):
 
 async def udpUserPass(db,user ):
     c = db.cursor()
-    sql = """UPDATE `portal_ddo`.`usuarios`
+    sql = """UPDATE `usuarios`
             SET
             `password` = \"{password}\"
             WHERE `username` = \"{username2}\";
@@ -515,7 +516,7 @@ async def udpUserPass(db,user ):
 
 async def insertUser(db, user):
     c = db.cursor()
-    sql = """INSERT INTO `portal_ddo`.`usuarios`
+    sql = """INSERT INTO `usuarios`
                 (
                 `role`,
                 `name`,
@@ -630,7 +631,7 @@ async def user_pass(request): # token: Token):
 async def user_passID(request): # token: Token):
     db = get_mysql_db()
     c = db.cursor(buffered=True)
-    query = """ SELECT id_usuarios, identificacion FROM `portal_ddo`.`usuarios` WHERE id_usuarios not in(1)"""
+    query = """ SELECT id_usuarios, identificacion FROM `usuarios` WHERE id_usuarios not in(1)"""
     c.execute(query)
     list = []
     c2 = db.cursor()
@@ -681,7 +682,7 @@ def listUsersByRole(db, role):
                             `usuarios`.`COD_CLIENTE`,
                             `usuarios`.`permisos`,
                             `usuarios`.`estatus`
-                        FROM `portal_ddo`.`usuarios` WHERE role in({role});
+                        FROM `usuarios` WHERE role in({role});
                         """.format(role=role)
     #print(query)
     c.execute(query)
@@ -722,7 +723,7 @@ def listUsersByClient(db, pCliente):
                             `usuarios`.`COD_CLIENTE`,
                             `usuarios`.`permisos`,
                             `usuarios`.`estatus`
-                        FROM `portal_ddo`.`usuarios` WHERE COD_CLIENTE = \'{pCliente}\';
+                        FROM `usuarios` WHERE COD_CLIENTE = \'{pCliente}\';
                         """.format(pCliente=pCliente)
         #print(query)
         c.execute(query)
