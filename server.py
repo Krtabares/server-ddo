@@ -1345,7 +1345,8 @@ async def procedure(request):
             'codigo_compani': arr[13],
             'grupo': arr[14],
             'tipo_pedido': arr[15],
-            'fecha_entrega':  dateByResponse(arr[16])
+            'fecha_entrega':  dateByResponse(arr[16]),
+            'idPedido': arr[17]
             }
         list.append(obj)
 
