@@ -1348,7 +1348,7 @@ async def procedure(request):
             'fecha_entrega':  dateByResponse(arr[16]),
             'id_pedido': arr[17],
             'v_pag': arr[18],
-            'no_linea2': arr[19]
+            'v_lin': arr[19]
             }
         list.append(obj)
 
