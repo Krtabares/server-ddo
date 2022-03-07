@@ -159,6 +159,7 @@ def mainInit(pool):
     getAPPconfig(db)
     initEvents(db)
     pool = generate_session_pool(db)
+    pprint(pool)
     return pool
 
 pool= mainInit(pool)
