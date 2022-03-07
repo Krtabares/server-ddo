@@ -158,7 +158,9 @@ def mainInit(pool):
     db = get_mysql_db()
     getAPPconfig(db)
     initEvents(db)
+    pprint("==========================ANTES DEL GENERATE=========================")
     pool = generate_session_pool(db)
+    pprint("##########################despues del generate###################################")
     pprint(pool)
     return pool
 
