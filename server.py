@@ -162,6 +162,7 @@ def mainInit(pool):
     pool = generate_session_pool(db)
     pprint("##########################despues del generate###################################")
     pprint(pool)
+    pprint("==============================ESTO ES POOL=======================================")
     return pool
 
 pool= mainInit(pool)
