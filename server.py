@@ -1579,7 +1579,7 @@ async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega)
                                             str(detalle['precio_bruto_bs']).replace(',', '.')),
                                         TIPO_CAMBIO=float(
                                             str(detalle['tipo_cambio']).replace(',', '.')),
-            BODEGA=detalle['bodega']
+            BODEGA=pBodega
             )
 
         c.execute(sql)
