@@ -158,11 +158,7 @@ def mainInit(pool):
     db = get_mysql_db()
     getAPPconfig(db)
     initEvents(db)
-    pprint("==========================ANTES DEL GENERATE=========================")
     pool = generate_session_pool(db)
-    pprint("##########################despues del generate###################################")
-    pprint(pool)
-    pprint("==============================ESTO ES POOL=======================================")
     return pool
 
 pool= mainInit(pool)
@@ -1965,7 +1961,8 @@ async def add_detalle_producto(request): # token: Token):
 
         if not pedidoValido:
             return response.json({"msg": "NO PUEDE EDITAR ESTE PEDIDO"}, status=410)
-
+        pprint("===============================add_detalle_producto================================")
+        pprint(data['pBodega'])
         respuesta = await crear_detalle_pedido( db,data['pedido'], data['ID'], data['pNoCia'], data['pNoGrupo'], data['pCliente'] ,data['pBodega'])
 
         if isinstance(respuesta, str):
