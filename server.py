@@ -1588,9 +1588,13 @@ async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega)
         db.commit()
 
         return disponible
+    except cx_Oracle.DatabaseError as exc:
+        error, = exc.args
+        print("Oracle-Error-Code:", error.code)
+        print("Oracle-Error-Message:", error.message)
 
-    except Exception as e:
-        logger.debug(e)
+    # except Exception as e:
+    #     logger.debug(e)
 
 
 async def upd_estatus_pedido(db, estatus, ID):
