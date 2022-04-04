@@ -1558,13 +1558,13 @@ async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega)
         cantidad = 0
 
         disponible = await existencia_disponible(db, pCia, detalle['COD_PRODUCTO'], detalle['CANTIDAD'], pBodega)
-        # print("==================crear_detalle_pedido========disponible=======================")
+        print("==================existencia_disponible========paso=======================")
         # print(disponible)
         if disponible == -1:
             return "No se pudo completar por favor verifique la disponibilidad del producto"
 
         respuesta = await valida_art(db, pCia, detalle['COD_PRODUCTO'], pGrupo, pCliente, disponible, float(str(detalle['precio_bruto_bs']).replace(',', '.')), int(ID))
-
+        print("==================valida_art========paso=======================")
         if respuesta != 1:
             return respuesta
 
@@ -1575,15 +1575,15 @@ async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega)
             ID_PEDIDO=int(ID),
             COD_PRODUCTO=str(detalle['COD_PRODUCTO']),
             CANTIDAD=int(disponible),
-                                        PRECIO=float(
-                                            str(detalle['precio_bruto_bs']).replace(',', '.')),
-                                        TIPO_CAMBIO=float(
-                                            str(detalle['tipo_cambio']).replace(',', '.')),
+            PRECIO=float(
+                str(detalle['precio_bruto_bs']).replace(',', '.')),
+            TIPO_CAMBIO=float(
+                str(detalle['tipo_cambio']).replace(',', '.')),
             BODEGA=str(pBodega)
             )
-
+        print(sql)
         c.execute(sql)
-
+        print("==================ejecuto sql========paso=======================")
         db.commit()
 
         return disponible
