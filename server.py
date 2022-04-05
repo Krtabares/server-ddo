@@ -2463,6 +2463,9 @@ async def totales_pedido(db, idPedido, origenPedido):
         descPreEmpaque =c.var(int)
         porcVol =c.var(int)
         porcPP =c.var(int)
+        # merge
+        porcInternet =c.var(int)
+        descInternet =c.var(int)
 
 
         l_result = c.callproc("""PROCESOSPW.totales_pedido""",[
@@ -2483,7 +2486,9 @@ async def totales_pedido(db, idPedido, origenPedido):
             tipoCambio,
             descPreEmpaque,
             porcVol,
-            porcPP
+            porcPP,
+            porcInternet,
+            descInternet
             ])[0]
 
         obj = {
