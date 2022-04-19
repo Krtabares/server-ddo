@@ -171,8 +171,8 @@ async def print_on_request(request):
     # print("midleware")
     # print(pool)
     # pprint(db)
-    db1 = get_oracle_db()
-    pool.release(db1)
+    # db1 = get_oracle_db()
+    # pool.release(db1)
     if 'dev' not in request.headers:
         if not pool:
             return response.json({"msg": "error"}, status=500)
