@@ -143,7 +143,7 @@ def poolReload():
 
 def get_oracle_db():
     connection = pool.acquire()
-    pprint(connection)
+    pprint(connection.ping())
     return connection
 
 def initEvents(db):
@@ -169,7 +169,9 @@ async def print_on_request(request):
     db = get_mysql_db()
     # print("midleware")
     # print(pool)
-    pprint(db)
+    # pprint(db)
+    db1 = get_oracle_db()
+    pool.release(db1)
     if 'dev' not in request.headers:
         if not pool:
             return response.json({"msg": "error"}, status=500)
@@ -2538,7 +2540,7 @@ async def totalesFactura(request):
     data = request.json
     db = get_oracle_db()
     list = await totales_pedido(db, data['pNoCia'],data['pNoFisico'] )
-    
+
     pool.release(db)
     return response.json({"msj": "OK", "totales": list}, 200)
 
