@@ -2527,6 +2527,95 @@ async def totales_pedido(db, idPedido, origenPedido):
         logger.debug(e)
         return e
 
+@app.route('/totales_factura', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+# #@jwt_required
+# async def totales(request): # token: Token):
+# #@jwt_required
+async def totalesFactura(request):
+
+    data = request.json
+    db = get_oracle_db()
+    list = await totales_pedido(db, data['pCia'],data['pNoFisico'] )
+    pool.release(db)
+    return response.json({"msj": "OK", "totales": list}, 200)
+
+async def totales_factura(db, pCia, pNoFisico):
+
+    try:
+        # db = get_oracle_db()
+        c = db.cursor()
+
+        descVol=c.var(int)
+        descDpp=c.var(int)
+        desPreEmp=c.var(int)
+        desCom=c.var(int)
+        subTotExe=c.var(int)
+        subTotGrav=c.var(int)
+        iva=c.var(int)
+        totalBs=c.var(int)
+        totalUsd=c.var(int)
+        anulada =c.var(str)
+        tipoCambio=c.var(str)
+        unidades=c.var(int)
+        porcCom =c.var(int)
+        porcVol =c.var(int)
+        porcDpp =c.var(int)
+        porcImp =c.var(int)
+        porcInternet =c.var(int)
+        descInternet =c.var(int)
+
+
+        l_result = c.callproc("""PROCESOSPW.totales_factura""",[
+            pCia,
+            pNoFisico
+            descVol,
+            descDpp,
+            desPreEmp,
+            desCom,
+            subTotExe,
+            subTotGrav,
+            iva,
+            totalBs,
+            totalUsd,
+            anulada ,
+            tipoCambio,
+            unidades,
+            porcCom ,
+            porcVol ,
+            porcDpp ,
+            porcImp ,
+            porcInternet ,
+            descInternet 
+            ])[0]
+
+        obj = {
+                'descVol': descVol.getvalue(), 
+                'descDpp': descDpp.getvalue(), 
+                'desPreEmp': desPreEmp.getvalue(),   
+                'desCom': desCom.getvalue(),  
+                'subTotExe': subTotExe.getvalue(),   
+                'subTotGrav': subTotGrav.getvalue(),  
+                'iva': iva.getvalue(), 
+                'totalBs': totalBs.getvalue(), 
+                'totalUsd': totalUsd.getvalue(),    
+                'anulada': anulada.getvalue(),     
+                'tipoCambio': tipoCambio.getvalue(),  
+                'unidades': unidades.getvalue(),    
+                'porcCom': porcCom.getvalue(),     
+                'porcVol': porcVol.getvalue(),     
+                'porcDpp': porcDpp.getvalue(),     
+                'porcImp': porcImp.getvalue(),     
+                'porcInternet': porcInternet.getvalue(),    
+                'descInternet': descInternet.getvalue()    
+        }
+
+        return obj
+    except Exception as e:
+        logger.debug(e)
+        return e
+
 @app.route('/get/ofertas', ["POST", "GET"])
 # @compress.compress
 @doc.exclude(True)
