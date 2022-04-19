@@ -2569,7 +2569,7 @@ async def totales_factura(db, pCia, pNoFisico):
 
         l_result = c.callproc("""PROCESOSPW.totales_factura""",[
             pCia,
-            pNoFisico
+            pNoFisico,
             descVol,
             descDpp,
             desPreEmp,
