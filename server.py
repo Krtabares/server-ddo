@@ -2540,7 +2540,7 @@ async def totalesFactura(request):
 
     data = request.json
     db = get_oracle_db()
-    list = await totales_pedido(db, data['pNoCia'],data['pNoFisico'] )
+    list = await totales_factura(db, data['pNoCia'],data['pNoFisico'] )
 
     pool.release(db)
     return response.json({"msj": "OK", "totales": list}, 200)
