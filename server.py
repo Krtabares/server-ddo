@@ -2522,7 +2522,9 @@ async def totales_pedido(db, idPedido, origenPedido):
                 'tipoCambio':tipoCambio.getvalue(),
                 'descPreEmpaque': descPreEmpaque.getvalue(),
                 'porcVol': porcVol.getvalue(),
-                'porcPP': porcPP.getvalue()
+                'porcPP': porcPP.getvalue(),
+                'descInternet': descInternet.getvalue(),
+                'porcInternet' : porcInternet.getvalue()
         }
 
         return obj
