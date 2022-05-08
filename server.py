@@ -143,8 +143,8 @@ def poolReload():
 
 def get_oracle_db():
     connection = pool.acquire()
-    print("===========================ping=========================")
-    pprint(connection.ping())
+    # print("===========================ping=========================")
+    # pprint(connection.ping())
     return connection
 
 def initEvents(db):
