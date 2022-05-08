@@ -914,7 +914,10 @@ async def getTotalpedidoElaboracion(db, cia, grp, cli):
     and `grupo_cliente`=\'{grupo_cliente}\' 
     and `cod_cliente`= \'{cod_cliente}\' """.format(cod_cia=cia,grupo_cliente=grp,cod_cliente=cli)
     c.execute(sql)
+    
     session_token = c.fetchone()
+    print("**********************************getTotalpedidoElaboracion*************************************")
+    pprint(session_token)
     return session_token
 
 @app.route('/procedure_clientes', ["POST", "GET"])
