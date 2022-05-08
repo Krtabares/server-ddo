@@ -889,6 +889,7 @@ async def disponible_cliente(db, cia, grp, cli):
     c = db.cursor()
     vdisp_bs = c.var(float)
     vdisp_usd = c.var(float)
+    print("===============================disponible_cliente==============================")
     pedido_act = await getTotalpedidoElaboracion(get_mysql_db(), cia, grp, cli) 
     l_result = c.callproc("""PROCESOSPW.disponible_cliente""",[
         vdisp_bs,
