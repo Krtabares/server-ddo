@@ -889,7 +889,7 @@ async def disponible_cliente(db, cia, grp, cli):
     c = db.cursor()
     vdisp_bs = c.var(float)
     vdisp_usd = c.var(float)
-    pedido_act = getTotalpedidoElaboracion(get_mysql_db(), cia, grp, cli) 
+    pedido_act = await getTotalpedidoElaboracion(get_mysql_db(), cia, grp, cli) 
     l_result = c.callproc("""PROCESOSPW.disponible_cliente""",[
         vdisp_bs,
         vdisp_usd,
@@ -1483,7 +1483,7 @@ async def crear_pedido(request):
             break
         db.commit()
         pool.release(db)
-        insertaPedidoEnElaboracion(get_mysql_db(), data['COD_CIA'],data['GRUPO_CLIENTE'],data['COD_CLIENTE'],ID )
+        await insertaPedidoEnElaboracion(get_mysql_db(), data['COD_CIA'],data['GRUPO_CLIENTE'],data['COD_CLIENTE'],ID )
         return ID
     except Exception as e:
         logger.debug(e)
@@ -1859,7 +1859,7 @@ async def finaliza_pedido(request): # token: Token):
         await upd_tipo_pedido(db,data['ID'], data['tipoPedido'])
         await upd_estatus_pedido(db,2, data['ID'])
         pool.release(db)
-        eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
+        await eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
         return response.json("success", 200)
     except Exception as e:
         logger.debug(e)
@@ -2072,7 +2072,7 @@ async def procedure(request):
 
         pool.release(db)
 
-        eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
+        await eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
         return response.json("SUCCESS", 200)
     except Exception as e:
         logger.debug(e)
@@ -2561,7 +2561,7 @@ async def totales_pedido(db, idPedido, origenPedido):
                 'porcInternet' : porcInternet.getvalue()
         }
 
-        UpdTotalpedidoEnElaboracion(get_mysql_db(),idPedido,total.getvalue())
+        await UpdTotalpedidoEnElaboracion(get_mysql_db(),idPedido,total.getvalue())
 
         return obj
     except Exception as e:
