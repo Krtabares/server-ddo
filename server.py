@@ -877,11 +877,15 @@ async def procedure(request):
         data['pCliente']
         ])[0]
 
+    pedido_act = await getTotalpedidoElaboracion(get_mysql_db(),  data['pNoCia'], data['pNoGrupo'],data['pCliente'])     
+
     obj = {
         'disp_bs': vdisp_bs.getvalue(),
-        'disp_usd': vdisp_usd.getvalue()
+        'disp_usd': vdisp_usd.getvalue(),
+        'pedido_act': pedido_act
     }
 
+    
 
     return response.json({"msj": "OK", "obj": obj}, 200)
 
