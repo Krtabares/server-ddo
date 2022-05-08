@@ -889,6 +889,7 @@ async def disponible_cliente(db, cia, grp, cli):
     c = db.cursor()
     vdisp_bs = c.var(float)
     vdisp_usd = c.var(float)
+    pedido_act = getTotalpedidoElaboracion(get_mysql_db(), cia, grp, cli) 
     l_result = c.callproc("""PROCESOSPW.disponible_cliente""",[
         vdisp_bs,
         vdisp_usd,
@@ -899,10 +900,22 @@ async def disponible_cliente(db, cia, grp, cli):
 
     obj = {
         'disp_bs': vdisp_bs.getvalue(),
-        'disp_usd': vdisp_usd.getvalue()
+        'disp_usd': vdisp_usd.getvalue(),
+        'pedido_act': pedido_act
     }
 
     return obj
+
+async def getTotalpedidoElaboracion(db, cia, grp, cli):
+    c = db.cursor()
+    sql = """SELECT `total`, `id_pedido` FROM 
+    `totales_parciales_pedidoos_en_elaboracion` 
+    WHERE `cod_cia`=\'{cod_cia}\'
+    and `grupo_cliente`=\'{grupo_cliente}\' 
+    and `cod_cliente`= \'{cod_cliente}\' """.format(cod_cia=cia,grupo_cliente=grp,cod_cliente=cli)
+    c.execute(sql)
+    session_token = c.fetchone()
+    return session_token
 
 @app.route('/procedure_clientes', ["POST", "GET"])
 # @compress.compress
@@ -1470,9 +1483,20 @@ async def crear_pedido(request):
             break
         db.commit()
         pool.release(db)
+        insertaPedidoEnElaboracion(get_mysql_db(), data['COD_CIA'],data['GRUPO_CLIENTE'],data['COD_CLIENTE'],ID )
         return ID
     except Exception as e:
         logger.debug(e)
+
+async def insertaPedidoEnElaboracion(db, cod_cia, grupo_cliente, cod_cliente,id_pedido ):
+    c = db.cursor()
+    sql = """INSERT INTO `totales_parciales_pedidoos_en_elaboracion`
+    ( `cod_cia`, `grupo_cliente`, `cod_cliente`, `id_pedido`, `total`) 
+    VALUES (\'{cia}\',\'{grupo}\',\'{cliente}\',\'{idPedido}\','0')
+            """.format(cia=cod_cia, grupo=grupo_cliente, cliente=cod_cliente, idPedido=id_pedido)
+    
+    c.execute(sql)
+    db.commit()
 
 
 async def update_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente):
@@ -1835,6 +1859,7 @@ async def finaliza_pedido(request): # token: Token):
         await upd_tipo_pedido(db,data['ID'], data['tipoPedido'])
         await upd_estatus_pedido(db,2, data['ID'])
         pool.release(db)
+        eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
         return response.json("success", 200)
     except Exception as e:
         logger.debug(e)
@@ -2046,11 +2071,20 @@ async def procedure(request):
         db.commit()
 
         pool.release(db)
+
+        eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
         return response.json("SUCCESS", 200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
 
+async def eliminaPedidoEnElaboracion(db, idPedido):
+    c = db.cursor()
+    sql = """DELETE FROM `totales_parciales_pedidoos_en_elaboracion` WHERE id_pedido = \'{id_Pedido}\'
+            """.format(id_Pedido=idPedido)
+    
+    c.execute(sql)
+    db.commit()
 
 @app.route('/get/pedidos', ["POST","GET"])
 # @compress.compress
@@ -2527,10 +2561,19 @@ async def totales_pedido(db, idPedido, origenPedido):
                 'porcInternet' : porcInternet.getvalue()
         }
 
+        UpdTotalpedidoEnElaboracion(get_mysql_db(),idPedido,total.getvalue())
+
         return obj
     except Exception as e:
         logger.debug(e)
         return e
+
+async def UpdTotalpedidoEnElaboracion(db, id_pedido, total):
+    c = db.cursor()
+    sql = """UPDATE `totales_parciales_pedidoos_en_elaboracion` SET `total`=\'{total}\' WHERE `id_pedido` = \'{pedido}\'
+            """.format(total=total,pedido=id_pedido)
+    c.execute(sql)
+    db.commit()
 
 @app.route('/totales_factura', ["POST", "GET"])
 # @compress.compress
