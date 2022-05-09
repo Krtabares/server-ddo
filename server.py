@@ -184,7 +184,7 @@ async def print_on_request(request):
                 return response.json({"msg": "Sin sesion activa"}, status=401)
 
             present = datetime.now()
-            expired_at = (present + timedelta(minutes = 15))
+            expired_at = (present + timedelta(minutes = 13))
             await udpSessionExpiredAt(db, access_token, expired_at )
 
 
@@ -349,7 +349,7 @@ async def login(request):
 
             access_token = JWT.create_access_token(identity=username)
 
-            expired_at = (datetime.now() + timedelta(minutes = 15))
+            expired_at = (datetime.now() + timedelta(minutes = 13))
 
             await insertSessionToken(db, access_token, username, expired_at)
 
