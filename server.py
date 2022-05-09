@@ -1503,7 +1503,6 @@ async def insertaPedidoEnElaboracion(db, cod_cia, grupo_cliente, cod_cliente,id_
             """.format(cia=cod_cia, grupo=grupo_cliente, cliente=cod_cliente)
     c.execute(sql)
     db.commit()
-    
     sql = """INSERT INTO `totales_parciales_pedidoos_en_elaboracion`
     ( `cod_cia`, `grupo_cliente`, `cod_cliente`, `id_pedido`, `total`) 
     VALUES (\'{cia}\',\'{grupo}\',\'{cliente}\',\'{idPedido}\','0')
