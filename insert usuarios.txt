@@ -1,0 +1,2781 @@
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA TERRAS. C.A.',
+            'noemail@email.com',
+            'PRO14',
+            'b43761397fd6a66cc5d0a6efcf8836c2',
+            '01',
+            '01',
+            'PRO14',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA DEL MERCADO',
+            'noemail@email.com',
+            'ROFAS',
+            'e704b20cc7d6290869ce421f71305d4e',
+            '01',
+            '01',
+            'ROFAS',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VIZCAYA 26',
+            'noemail@email.com',
+            'VISCA',
+            'dbea9ade0585442817082bcd55f30dee',
+            '01',
+            '01',
+            'VISCA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA SILAU C.A.',
+            'noemail@email.com',
+            'SILAU',
+            '5a1d1fd975d9bd4aeff2f0eab4b3b440',
+            '01',
+            '01',
+            'SILAU',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LA CASCADA',
+            'noemail@email.com',
+            'TCASC',
+            '61e682ef283cb309616938b4ecf1221d',
+            '01',
+            '01',
+            'TCASC',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FERRENQUIN II. C.A.',
+            'noemail@email.com',
+            'FEQU2',
+            '44920048a3ef50ca6522a77a5f6d638c',
+            '01',
+            '01',
+            'FEQU2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FERRENQUIN, C.A.',
+            'noemail@email.com',
+            'FEQUI',
+            '1c90a176f01fc4e68f9ef132d1e00519',
+            '01',
+            '01',
+            'FEQUI',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMACHAC, C.A',
+            'noemail@email.com',
+            'FARM8',
+            '6139699808febf3d8e1d75a7cb4b1add',
+            '01',
+            '01',
+            'FARM8',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'INVERSIONES FARVALEN. C.A.',
+            'noemail@email.com',
+            'FARVA',
+            'b5b8c2c55a5b573155e6346747c7803c',
+            '01',
+            '01',
+            'FARVA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LOVALLE C.A.',
+            'noemail@email.com',
+            'LOVAL',
+            '45d26ba2266d8deb3c3326c534c0f01f',
+            '01',
+            '01',
+            'LOVAL',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA MODELO. C.A',
+            'noemail@email.com',
+            'MODEL',
+            '7647e69c47fb6b507b95abe70975242f',
+            '01',
+            '01',
+            'MODEL',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA MASSALUD C.A.',
+            'noemail@email.com',
+            'MASSA',
+            '4f63c14b42c39219e15f52d9bc1518a3',
+            '01',
+            '01',
+            'MASSA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'AUTOMERCADOS PLAZA´S, C.A.',
+            'noemail@email.com',
+            'PLA04',
+            'c97b342d9e9b2bafe52225d2628f4fe0',
+            '01',
+            '01',
+            'PLA04',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA ALTAGRACIA, C.A.',
+            'noemail@email.com',
+            'ALTAG',
+            '8d515aa1e8e738d83379bf90e271cde0',
+            '01',
+            '01',
+            'ALTAG',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA ALTAMIRA NORTE, C.A.',
+            'noemail@email.com',
+            'ALTAM',
+            '2c88a6390a0e873f2edbe134ba6b042e',
+            '01',
+            '01',
+            'ALTAM',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA ALTO NARANJO C.A.',
+            'noemail@email.com',
+            'ALTON',
+            '158c0155caab3e5606bcd3965d6b50cf',
+            '01',
+            '01',
+            'ALTON',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA ANTO C.A.',
+            'noemail@email.com',
+            'ANTO',
+            'f53cf3d540adf84d198e6227de748a7b',
+            '01',
+            '01',
+            'ANTO',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'AUTOMERCADOS PLAZA´S, C.A.',
+            'noemail@email.com',
+            'PLA08',
+            '2df4898a98f62a54ba457ed6afc506f3',
+            '01',
+            '01',
+            'PLA08',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA ESTEFANIA C.A.',
+            'noemail@email.com',
+            'ESTEF',
+            'ed2eada830bc89d20ce0b21931800c5a',
+            '01',
+            '01',
+            'ESTEF',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA ERIKA, C.A.',
+            'noemail@email.com',
+            'ERIKA',
+            'ddfe9cab9a4194f4130061c3d162d21a',
+            '01',
+            '01',
+            'ERIKA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET HORIZONTE 2009, C.A.',
+            'noemail@email.com',
+            'HORIZO',
+            'cb33f05b1fe87aaa8cdd4ce1861a4dae',
+            '01',
+            '01',
+            'HORIZO',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA PAMELA C.A.',
+            'noemail@email.com',
+            'PAMEL',
+            '7e87e777391a7697e03fccad93f055c0',
+            '01',
+            '01',
+            'PAMEL',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA PHARMATENCION AGUERREVERE, C.A.',
+            'noemail@email.com',
+            'PTENC',
+            'e1bd26b8e77f26585c4d848177b3178d',
+            '01',
+            '01',
+            'PTENC',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA HATIGAL C.A.',
+            'noemail@email.com',
+            'HATIG',
+            '686e1dce66f8ff6f55e9575b73533c6b',
+            '01',
+            '01',
+            'HATIG',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA CUTIRA',
+            'noemail@email.com',
+            'CUTIR',
+            '70b70c4bb62a12252d403d3cdbc294ce',
+            '01',
+            '01',
+            'CUTIR',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'AUTOMERCADOS PLAZA S. C.A.',
+            'noemail@email.com',
+            'PLA06',
+            'af84f69581d8797d29cb0fe8fa824a16',
+            '01',
+            '01',
+            'PLA06',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA Y MUCHO MAS I, C.A.',
+            'noemail@email.com',
+            'MUCHOM',
+            '6b747529ac81a52035c205be109e0e8c',
+            '01',
+            '01',
+            'MUCHOM',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET AV MEXICO, C.A',
+            'noemail@email.com',
+            'FMARKE',
+            '4d0ebf65ee2a1d671275f3dfdedad313',
+            '01',
+            '01',
+            'FMARKE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LAS ROSAS C.A',
+            'noemail@email.com',
+            'ROSAS',
+            '43e2e5e936384f2caef60289f8630de1',
+            '01',
+            '01',
+            'ROSAS',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VALERY, C.A.',
+            'noemail@email.com',
+            'VALERY',
+            '541d8dcf4c2b22aa960532e8d32a05fd',
+            '01',
+            '01',
+            'VALERY',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA SAN CHARBEL C.A.',
+            'noemail@email.com',
+            'TCHAR',
+            'd6aced812a15776dc52597e1fafba937',
+            '01',
+            '01',
+            'TCHAR',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMASAB, C.A (FARMARKET)',
+            'noemail@email.com',
+            'PRO12',
+            '435f020bb3208192484003d23b404797',
+            '01',
+            '01',
+            'PRO12',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VERAMED, C.A.',
+            'noemail@email.com',
+            'VERAM4',
+            'cf4baa9ef0851b0ccb1f6a26138951fa',
+            '01',
+            '01',
+            'VERAM4',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA DARANPE, C.A.',
+            'noemail@email.com',
+            'DARAN1',
+            '81aed0398eab093293df08379cd59f66',
+            '01',
+            '01',
+            'DARAN1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'INVERSIONES A & CM, C.A.',
+            'noemail@email.com',
+            'CAFET',
+            'c86a4be38c7a9c6cf111ad603e6bd355',
+            '01',
+            '01',
+            'CAFET',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA KATHERINE. C.A.',
+            'noemail@email.com',
+            'INFAR',
+            '552325d387d46fd5b3a1af29b2319a20',
+            '01',
+            '01',
+            'INFAR',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA SAFEL 777, S.A.',
+            'noemail@email.com',
+            'SAFEL1',
+            'f0e1b632dac6a517b8a4d1fe4d332eb5',
+            '01',
+            '01',
+            'SAFEL1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VERAMED C.A., SUCURSAL',
+            'noemail@email.com',
+            'VERAM1',
+            '3ecb3e2b6d954842f6476a2ae66a93a5',
+            '01',
+            '01',
+            'VERAM1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VERAMED C.A., SUCURSAL.',
+            'noemail@email.com',
+            'VERAM2',
+            'e1252de04f8882d3c2cbfe923954af73',
+            '01',
+            '01',
+            'VERAM2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VERAMED, C.A, SUCURSAL',
+            'noemail@email.com',
+            'VERAM3',
+            '375af347efcab3f6e3320247290502ba',
+            '01',
+            '01',
+            'VERAM3',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA CANDEL, C.A.',
+            'noemail@email.com',
+            'CANDE1',
+            '23f4137f497e78c96f8702a318b4ca39',
+            '01',
+            '01',
+            'CANDE1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'DROGUERIA FARMAGAMA C.A.',
+            'noemail@email.com',
+            'FGAMA',
+            'db29f050d9bd9df8e3386aa92bf0a8ce',
+            '01',
+            '01',
+            'FGAMA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VAZQUEZ X 4, C.A.',
+            'noemail@email.com',
+            'VAZQUE',
+            '4d8bd12983cf7cad71ff0d2bdc6ff1db',
+            '01',
+            '01',
+            'VAZQUE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA CANDEL, C.A., SUCURSAL',
+            'noemail@email.com',
+            'CANDE2',
+            'e7529c74e39a3a12eb983033aae60322',
+            '01',
+            '01',
+            'CANDE2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA SANTA EDUVIGIS C.A.',
+            'noemail@email.com',
+            'EDUVI',
+            '20d1cb81a1b85f9f98fc5e899d7bab15',
+            '01',
+            '01',
+            'EDUVI',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA RAZETTI, C.A.',
+            'noemail@email.com',
+            'RAZZE',
+            '16e27b5641d6c5d4a607fbe730522566',
+            '01',
+            '01',
+            'RAZZE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'TRINIGOLD FARMACIA, C.A.',
+            'noemail@email.com',
+            'TRINI1',
+            '98de0aade11b6193b80fd8c7e221a0a4',
+            '01',
+            '01',
+            'TRINI1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA GRAN COLOMBIA',
+            'noemail@email.com',
+            'GRANC',
+            '4df04080be50702c02031a0cd25fb6b4',
+            '01',
+            '01',
+            'GRANC',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA YERBA BUENA C.A.',
+            'noemail@email.com',
+            'MYERBA',
+            '912b449744a5bc027e47a640df0dd016',
+            '01',
+            '01',
+            'MYERBA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'TRINIGOLD FARMACIA, C.A.',
+            'noemail@email.com',
+            'TRINI2',
+            'cb6972eb4c720cede17c06a35ce1d154',
+            '01',
+            '01',
+            'TRINI2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMATENCION. C.A.',
+            'noemail@email.com',
+            'FATEN',
+            '4a3d72d6462bd515ec96780dec060fc4',
+            '01',
+            '01',
+            'FATEN',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA HERRERA C.A.',
+            'noemail@email.com',
+            'HERRE',
+            'c34ac5a9acaa500d035ed775ad51fb8c',
+            '01',
+            '01',
+            'HERRE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LOCPAR 18, C.A.',
+            'noemail@email.com',
+            'LOCPA1',
+            '16dbc52e7decf66bda3dc27ba3aa3d89',
+            '01',
+            '01',
+            'LOCPA1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LOCPAR 18, C.A., SUCURSAL',
+            'noemail@email.com',
+            'LOCPA2',
+            'a6fd5f2c547e4d206b6afddfd27add26',
+            '01',
+            '01',
+            'LOCPA2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA SALUPET, C.A',
+            'noemail@email.com',
+            'SALUPE',
+            'c0f02d1f05622bb3c5c141996a473895',
+            '01',
+            '01',
+            'SALUPE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA MICHELA, C.A.',
+            'noemail@email.com',
+            'MICHEL',
+            'e3bd2a32315534218526b98a67e10e29',
+            '01',
+            '01',
+            'MICHEL',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LOVIC, C.A.',
+            'noemail@email.com',
+            'LOVIC',
+            '1032489cf3e2a321beba0dd1779b4d14',
+            '01',
+            '01',
+            'LOVIC',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LOCATEL CA',
+            'noemail@email.com',
+            'LOCATE',
+            'dad44b3a1fccf6555590f14c3e2730c7',
+            '01',
+            '01',
+            'LOCATE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA CENTRO PLAZA C.A.',
+            'noemail@email.com',
+            'CENT4',
+            '236654c92f7cc591cbd42366a5385886',
+            '01',
+            '01',
+            'CENT4',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'DISGLOE FARMACIA C.A',
+            'noemail@email.com',
+            'VDISGL',
+            '30acd3a12d2baad2a5579f5c46a8df3d',
+            '01',
+            '01',
+            'VDISGL',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA ANTO II, C.A.',
+            'noemail@email.com',
+            'ANTO2',
+            'bd610fea4410fb75db31fcdf77011ac1',
+            '01',
+            '01',
+            'ANTO2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET CHACAITO, C.A.',
+            'noemail@email.com',
+            'CHACAI',
+            'cccfd204d7d30b4e9c3dbc53996ac14c',
+            '01',
+            '01',
+            'CHACAI',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA Y MUCHO MAS II, C.A',
+            'noemail@email.com',
+            'MUCHII',
+            '42119a79326b241174737d97f00a133c',
+            '01',
+            '01',
+            'MUCHII',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VERAMED, C.A, SUCURSAL',
+            'noemail@email.com',
+            'VERAM6',
+            '030afccef0bbeee39585697459981e74',
+            '01',
+            '01',
+            'VERAM6',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA GADSA 44. C.A.',
+            'noemail@email.com',
+            'GADSA',
+            '34d6220af0fae411dd3ba68232aa636f',
+            '01',
+            '01',
+            'GADSA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA SALUD GUAYCAR C.A',
+            'noemail@email.com',
+            'GUAYCA',
+            'ec60c0b9b602b36d010603b264ce2a72',
+            '01',
+            '01',
+            'GUAYCA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LOVALLE, C.A, SUCURSAL',
+            'noemail@email.com',
+            'LOVAL1',
+            '424a468128616d0af898d8b944e0608d',
+            '01',
+            '01',
+            'LOVAL1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA 9 ENE, C.A.',
+            'noemail@email.com',
+            'F9ENE1',
+            'a5d7d72c9870dbc189989c7f6177bd66',
+            '01',
+            '01',
+            'F9ENE1',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA 9 ENE, C.A.',
+            'noemail@email.com',
+            'F9ENE2',
+            'b49447f5e6b4f50caa0fcc5e33232d36',
+            '01',
+            '01',
+            'F9ENE2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'LOCATEL PLAZA BOLIVAR',
+            'noemail@email.com',
+            'NORAM2',
+            '6a532504b2550f304a8ac26be469b2f3',
+            '01',
+            '01',
+            'NORAM2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'INVERNOR FARMACIA C.A.',
+            'noemail@email.com',
+            'MINOR',
+            '7ba07f8295a3d6bc65b87ac5463f75f1',
+            '01',
+            '01',
+            'MINOR',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA LOCAMAR, C.A.',
+            'noemail@email.com',
+            'LOCAMA',
+            '1ae0735dcde2feb4ce0aef29ea43b4a4',
+            '01',
+            '01',
+            'LOCAMA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'INVERSIONES ALPRAFAR. C.A.',
+            'noemail@email.com',
+            'ALPRA',
+            '84cd17e06bb7743432aaf957400056c8',
+            '01',
+            '01',
+            'ALPRA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET SANTA PAULA, C.A.',
+            'noemail@email.com',
+            'FPAULA',
+            '5b2d77ad7a72841ff0d4c1a6e28cea19',
+            '01',
+            '01',
+            'FPAULA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA CUMBRERA C.A.',
+            'noemail@email.com',
+            'CUMBR',
+            '1b4b46fb6cb65142a4a47cb196bd0af2',
+            '01',
+            '01',
+            'CUMBR',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET ALTAMIRA, C.A.',
+            'noemail@email.com',
+            'FALTAM',
+            '29162109793ca69326d57c5133d414f1',
+            '01',
+            '01',
+            'FALTAM',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET CCCT, C.A.',
+            'noemail@email.com',
+            'CCCT',
+            '2da59a50c6588dc44ffd2181e5e63f49',
+            '01',
+            '01',
+            'CCCT',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET SAN LUIS, C.A.',
+            'noemail@email.com',
+            'FSLUIS',
+            '2ef6f5cc1d27a045fdaa072bfa61c305',
+            '01',
+            '01',
+            'FSLUIS',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET PRADOS DEL ESTE, C.A.',
+            'noemail@email.com',
+            'FPRADO',
+            'ce83c72194333c4eeff4c6034a8fe04e',
+            '01',
+            '01',
+            'FPRADO',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMA ARMADA 24, C.A.',
+            'noemail@email.com',
+            'ARMADA',
+            '22cfbcd6d4577bfd846cceab18bc3d03',
+            '01',
+            '01',
+            'ARMADA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET LIDO, C.A.',
+            'noemail@email.com',
+            'FLIDO',
+            'd40cdac137bc8e99e0fe56c87c7e1a4a',
+            '01',
+            '01',
+            'FLIDO',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET LOS PALOS GRANDES, CA',
+            'noemail@email.com',
+            'FPGRAN',
+            'cd4b7e9723b2b28bbabdba501fd89047',
+            '01',
+            '01',
+            'FPGRAN',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET LA TRINIDAD, C.A.',
+            'noemail@email.com',
+            'FTRINI',
+            '67b25bcf51c45156cff2404b5517afbe',
+            '01',
+            '01',
+            'FTRINI',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET EL CAFETAL, C.A.',
+            'noemail@email.com',
+            'FCAFET',
+            'd9a5565e9d982638248616680fcfd0b9',
+            '01',
+            '01',
+            'FCAFET',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'INVERSUR FARMACIA, C.A.',
+            'noemail@email.com',
+            'MFINVE',
+            '739e5da26a839aac908f1610611f408d',
+            '01',
+            '01',
+            'MFINVE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMARKET UNICENTRO EL MARQUES, C.A',
+            'noemail@email.com',
+            'MARQUE',
+            'aedf4627ad537652e905bbf9d4a16ece',
+            '01',
+            '01',
+            'MARQUE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMAVALOR, C.A.',
+            'noemail@email.com',
+            'FARMAV',
+            'bda571968adbd2550b5ee30cc974cb97',
+            '01',
+            '01',
+            'FARMAV',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMATUYA, C.A.',
+            'noemail@email.com',
+            'FTUYA',
+            '8e232a51501104373727c12e01fd69b8',
+            '01',
+            '01',
+            'FTUYA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMA SEGUNDO 24, C.A.',
+            'noemail@email.com',
+            'FSEGUN',
+            'bfd551cdca85988723e9a60ee03b706d',
+            '01',
+            '01',
+            'FSEGUN',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA TECNOFARMA, C.A.',
+            'noemail@email.com',
+            'TECNOF',
+            'a2901d2e19a6f96b654fc68c3668f9cc',
+            '01',
+            '01',
+            'TECNOF',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET LIDER 2020, C.A.',
+            'noemail@email.com',
+            'FLIDER',
+            'f74e68910733a65acb9e79293323b69f',
+            '01',
+            '01',
+            'FLIDER',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA GRUPO TOTAL 99 C.A SUC CHACAITO',
+            'noemail@email.com',
+            'GTOTA2',
+            '13494b33545ec70a2849e9fcfe3686f3',
+            '01',
+            '01',
+            'GTOTA2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET SAN ANDRES, C.A.',
+            'noemail@email.com',
+            'FANDRE',
+            'ddabcfbf4d83703a0076f0c912bd105e',
+            '01',
+            '01',
+            'FANDRE',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'TECNOFARMA, C.A. SUCURSAL FUERZAS ARMADA',
+            'noemail@email.com',
+            'TECNO2',
+            '587f3adb66f547f7e3169428d25dd29d',
+            '01',
+            '01',
+            'TECNO2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA GRUPO TOTAL 99, C.A (SUC. 20)',
+            'noemail@email.com',
+            'GTOTA5',
+            'bcb9b62c66ff6f01fd5b40f6178b299c',
+            '01',
+            '01',
+            'GTOTA5',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA MELICAR',
+            'noemail@email.com',
+            'MELIC',
+            'e9ae31d6d676775d83ee1532b93dbff6',
+            '01',
+            '01',
+            'MELIC',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'INVERSIONES FARMAZITA, C.A.',
+            'noemail@email.com',
+            'FMZITA',
+            'a208a2a684abbae42f3b2e23ba99dac3',
+            '01',
+            '01',
+            'FMZITA',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA FARMARKET TOLON, C.A.',
+            'noemail@email.com',
+            'FTOLON',
+            '1f73a008c7bdaee1960440c14542aa29',
+            '01',
+            '01',
+            'FTOLON',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA VERAMED, C.A.',
+            'noemail@email.com',
+            'VERAM5',
+            '6f4b7075cc4b0dfda2aadc7f04c1bc3a',
+            '01',
+            '01',
+            'VERAM5',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMAVALOR, C.A.',
+            'noemail@email.com',
+            'FARMV2',
+            '4918aee247618e8615f213b8cfe20fa2',
+            '01',
+            '01',
+            'FARMV2',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMAVALOR, C.A.',
+            'noemail@email.com',
+            'FARMV3',
+            '977d519a2d602e74456120b549e45861',
+            '01',
+            '01',
+            'FARMV3',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA GRUPO TOTAL 99, C.A.',
+            'noemail@email.com',
+            'GTOTA4',
+            '02cd1beef80214a9eb5500f1c01dd9cb',
+            '01',
+            '01',
+            'GTOTA4',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        
+INSERT INTO usuarios
+            (
+            role,
+            name,
+            email,
+            username,
+            password,
+            COD_CIA,
+            GRUPO_CLIENTE,
+            COD_CLIENTE,
+            estatus,
+            permisos
+            )
+            VALUES
+            (
+            'generic',
+            'FARMACIA SUCURSAL GRUPO TOTAL 99, C.A.',
+            'noemail@email.com',
+            'GTOTA3',
+            'cd19ababc13269fe8b4a0f2aaf5271f2',
+            '01',
+            '01',
+            'GTOTA3',
+            'Activo',
+            '{"pedido": {"ver": true, "crear": true, "editar": true, "eliminar": false},"perfil": {"ver": true}}'
+            );
+        

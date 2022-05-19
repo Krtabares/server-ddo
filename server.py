@@ -42,7 +42,7 @@ class CustomHandler(ErrorHandler):
 
 app = Sanic(__name__)
 # Compress(app)
-port = 3500
+port = 3501
 
 compress = Compress()
 sio = socketio.AsyncServer(async_mode='sanic')
@@ -64,12 +64,13 @@ variables_de_entorno = {
     "refrescamiento_session" : None
 }
 
+database_mysql = "portal_ddo_dev"
 def get_mysql_db():
     connection  = mysql.connector.connect(
         host="localhost",
         user="root",
         password="",
-        database="portal_ddo"
+        database="portal_ddo_dev"
         )
     return connection
 
@@ -142,6 +143,8 @@ def poolReload():
 
 def get_oracle_db():
     connection = pool.acquire()
+    # print("===========================ping=========================")
+    # pprint(connection.ping())
     return connection
 
 def initEvents(db):
@@ -165,20 +168,19 @@ pool= mainInit(pool)
 async def print_on_request(request):
     global pool
     db = get_mysql_db()
-    # print("midleware")
-    # print(pool)
+    
     if 'dev' not in request.headers:
         if not pool:
             return response.json({"msg": "error"}, status=500)
         if  'authorization' in request.headers:
             access_token = request.headers['authorization'][7:]
             session = await getSessionTokenBySession(db, access_token)
-
+            # pprint(session)
             if not session:
                 return response.json({"msg": "Sin sesion activa"}, status=401)
 
             present = datetime.now()
-            expired_at = (present + timedelta(minutes = 15))
+            expired_at = (present + timedelta(minutes = 13))
             await udpSessionExpiredAt(db, access_token, expired_at )
 
 
@@ -302,7 +304,7 @@ async def udpSessionExpiredAt(db, access_token, expired_at ):
 
 async def insertSessionToken(db, access_token, username, expired_at):
     c = db.cursor()
-    sql = """INSERT INTO `portal_ddo`.`session_token`
+    sql = """INSERT INTO `session_token`
             (`access_token`,
             `username`,
             `expired_at`,create_at)
@@ -310,6 +312,7 @@ async def insertSessionToken(db, access_token, username, expired_at):
             (\'{access_token}\',\'{username}\',\'{expired_at}\', NOW())
             """.format(access_token=access_token,
             username=username,expired_at=expired_at)
+    
     c.execute(sql)
     db.commit()
 
@@ -342,7 +345,7 @@ async def login(request):
 
             access_token = JWT.create_access_token(identity=username)
 
-            expired_at = (datetime.now() + timedelta(minutes = 15))
+            expired_at = (datetime.now() + timedelta(minutes = 13))
 
             await insertSessionToken(db, access_token, username, expired_at)
 
@@ -469,7 +472,7 @@ async def getUserByUsername(db, username ):
 
 async def udpUser(db,user ):
     c = db.cursor()
-    sql = """UPDATE `portal_ddo`.`usuarios`
+    sql = """UPDATE `usuarios`
             SET
             `role` = \"{role}\",
             `name` = \"{name}\",
@@ -499,7 +502,7 @@ async def udpUser(db,user ):
 
 async def udpUserPass(db,user ):
     c = db.cursor()
-    sql = """UPDATE `portal_ddo`.`usuarios`
+    sql = """UPDATE `usuarios`
             SET
             `password` = \"{password}\"
             WHERE `username` = \"{username2}\";
@@ -512,7 +515,7 @@ async def udpUserPass(db,user ):
 
 async def insertUser(db, user):
     c = db.cursor()
-    sql = """INSERT INTO `portal_ddo`.`usuarios`
+    sql = """INSERT INTO `usuarios`
                 (
                 `role`,
                 `name`,
@@ -627,7 +630,7 @@ async def user_pass(request): # token: Token):
 async def user_passID(request): # token: Token):
     db = get_mysql_db()
     c = db.cursor(buffered=True)
-    query = """ SELECT id_usuarios, identificacion FROM `portal_ddo`.`usuarios` WHERE id_usuarios not in(1)"""
+    query = """ SELECT id_usuarios, identificacion FROM `usuarios` WHERE id_usuarios not in(1)"""
     c.execute(query)
     list = []
     c2 = db.cursor()
@@ -678,7 +681,7 @@ def listUsersByRole(db, role):
                             `usuarios`.`COD_CLIENTE`,
                             `usuarios`.`permisos`,
                             `usuarios`.`estatus`
-                        FROM `portal_ddo`.`usuarios` WHERE role in({role});
+                        FROM `usuarios` WHERE role in({role});
                         """.format(role=role)
     #print(query)
     c.execute(query)
@@ -719,7 +722,7 @@ def listUsersByClient(db, pCliente):
                             `usuarios`.`COD_CLIENTE`,
                             `usuarios`.`permisos`,
                             `usuarios`.`estatus`
-                        FROM `portal_ddo`.`usuarios` WHERE COD_CLIENTE = \'{pCliente}\';
+                        FROM `usuarios` WHERE COD_CLIENTE = \'{pCliente}\';
                         """.format(pCliente=pCliente)
         #print(query)
         c.execute(query)
@@ -870,11 +873,15 @@ async def procedure(request):
         data['pCliente']
         ])[0]
 
+    pedido_act = await getTotalpedidoElaboracion(get_mysql_db(),  data['pNoCia'], data['pNoGrupo'],data['pCliente'])     
+
     obj = {
         'disp_bs': vdisp_bs.getvalue(),
-        'disp_usd': vdisp_usd.getvalue()
+        'disp_usd': vdisp_usd.getvalue(),
+        'pedido_act': pedido_act
     }
 
+    
 
     return response.json({"msj": "OK", "obj": obj}, 200)
 
@@ -882,6 +889,8 @@ async def disponible_cliente(db, cia, grp, cli):
     c = db.cursor()
     vdisp_bs = c.var(float)
     vdisp_usd = c.var(float)
+    print("===============================disponible_cliente==============================")
+    pedido_act = await getTotalpedidoElaboracion(get_mysql_db(), cia, grp, cli) 
     l_result = c.callproc("""PROCESOSPW.disponible_cliente""",[
         vdisp_bs,
         vdisp_usd,
@@ -892,10 +901,25 @@ async def disponible_cliente(db, cia, grp, cli):
 
     obj = {
         'disp_bs': vdisp_bs.getvalue(),
-        'disp_usd': vdisp_usd.getvalue()
+        'disp_usd': vdisp_usd.getvalue(),
+        'pedido_act': pedido_act
     }
 
     return obj
+
+async def getTotalpedidoElaboracion(db, cia, grp, cli):
+    c = db.cursor()
+    sql = """SELECT `total`, `id_pedido` FROM 
+    `totales_parciales_pedidoos_en_elaboracion` 
+    WHERE `cod_cia`=\'{cod_cia}\'
+    and `grupo_cliente`=\'{grupo_cliente}\' 
+    and `cod_cliente`= \'{cod_cliente}\' """.format(cod_cia=cia,grupo_cliente=grp,cod_cliente=cli)
+    c.execute(sql)
+    
+    session_token = c.fetchone()
+    print("**********************************getTotalpedidoElaboracion*************************************")
+    pprint(session_token)
+    return session_token
 
 @app.route('/procedure_clientes', ["POST", "GET"])
 # @compress.compress
@@ -1342,12 +1366,16 @@ async def procedure(request):
             'codigo_compani': arr[13],
             'grupo': arr[14],
             'tipo_pedido': arr[15],
-            'fecha_entrega':  dateByResponse(arr[16])
+            'fecha_entrega':  dateByResponse(arr[16]),
+            'id_pedido': arr[17],
+            'v_pag': arr[18],
+            'v_lin': arr[19]
             }
         list.append(obj)
 
 
     return response.json({"msj": "OK", "obj": agrupar_facturas(list)}, 200)
+    # return response.json({"msj": "OK", "obj": list}, 200)
 
 
 @app.route('/valida/client', ["POST", "GET"])
@@ -1459,9 +1487,25 @@ async def crear_pedido(request):
             break
         db.commit()
         pool.release(db)
+        await insertaPedidoEnElaboracion(get_mysql_db(), data['COD_CIA'],data['GRUPO_CLIENTE'],data['COD_CLIENTE'],ID )
         return ID
     except Exception as e:
         logger.debug(e)
+
+async def insertaPedidoEnElaboracion(db, cod_cia, grupo_cliente, cod_cliente,id_pedido ):
+    c = db.cursor()
+    sql = """DELETE FROM `totales_parciales_pedidoos_en_elaboracion`
+     WHERE cod_cia = \'{cia}\' and `grupo_cliente`=\'{grupo}\' and `cod_cliente` = \'{cliente}\'
+            """.format(cia=cod_cia, grupo=grupo_cliente, cliente=cod_cliente)
+    c.execute(sql)
+    db.commit()
+    sql = """INSERT INTO `totales_parciales_pedidoos_en_elaboracion`
+    ( `cod_cia`, `grupo_cliente`, `cod_cliente`, `id_pedido`, `total`) 
+    VALUES (\'{cia}\',\'{grupo}\',\'{cliente}\',\'{idPedido}\','0')
+            """.format(cia=cod_cia, grupo=grupo_cliente, cliente=cod_cliente, idPedido=id_pedido)
+    
+    c.execute(sql)
+    db.commit()
 
 
 async def update_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente):
@@ -1550,13 +1594,13 @@ async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega)
         cantidad = 0
 
         disponible = await existencia_disponible(db, pCia, detalle['COD_PRODUCTO'], detalle['CANTIDAD'], pBodega)
-        print("==================crear_detalle_pedido========disponible=======================")
-        print(disponible)
+        print("==================existencia_disponible========paso=======================")
+        # print(disponible)
         if disponible == -1:
             return "No se pudo completar por favor verifique la disponibilidad del producto"
 
         respuesta = await valida_art(db, pCia, detalle['COD_PRODUCTO'], pGrupo, pCliente, disponible, float(str(detalle['precio_bruto_bs']).replace(',', '.')), int(ID))
-
+        print("==================valida_art========paso=======================")
         if respuesta != 1:
             return respuesta
 
@@ -1567,21 +1611,26 @@ async def crear_detalle_pedido(db, detalle, ID, pCia, pGrupo, pCliente, pBodega)
             ID_PEDIDO=int(ID),
             COD_PRODUCTO=str(detalle['COD_PRODUCTO']),
             CANTIDAD=int(disponible),
-                                        PRECIO=float(
-                                            str(detalle['precio_bruto_bs']).replace(',', '.')),
-                                        TIPO_CAMBIO=float(
-                                            str(detalle['tipo_cambio']).replace(',', '.')),
-            BODEGA=detalle['bodega']
+            PRECIO=float(
+                str(detalle['precio_bruto_bs']).replace(',', '.')),
+            TIPO_CAMBIO=float(
+                str(detalle['tipo_cambio']).replace(',', '.')),
+            BODEGA=str(pBodega)
+            # BODEGA=detalle['bodega']
             )
-
+        print(sql)
         c.execute(sql)
-
+        print("==================ejecuto sql========paso=======================")
         db.commit()
 
         return disponible
+    except cx_Oracle.DatabaseError as exc:
+        error, = exc.args
+        print("Oracle-Error-Code:", error.code)
+        print("Oracle-Error-Message:", error.message)
 
-    except Exception as e:
-        logger.debug(e)
+    # except Exception as e:
+    #     logger.debug(e)
 
 
 async def upd_estatus_pedido(db, estatus, ID):
@@ -1819,6 +1868,7 @@ async def finaliza_pedido(request): # token: Token):
         await upd_tipo_pedido(db,data['ID'], data['tipoPedido'])
         await upd_estatus_pedido(db,2, data['ID'])
         pool.release(db)
+        await eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
         return response.json("success", 200)
     except Exception as e:
         logger.debug(e)
@@ -1953,7 +2003,8 @@ async def add_detalle_producto(request): # token: Token):
 
         if not pedidoValido:
             return response.json({"msg": "NO PUEDE EDITAR ESTE PEDIDO"}, status=410)
-
+        pprint("===============================add_detalle_producto================================")
+        pprint(data['pBodega'])
         respuesta = await crear_detalle_pedido( db,data['pedido'], data['ID'], data['pNoCia'], data['pNoGrupo'], data['pCliente'] ,data['pBodega'])
 
         if isinstance(respuesta, str):
@@ -2029,11 +2080,20 @@ async def procedure(request):
         db.commit()
 
         pool.release(db)
+
+        await eliminaPedidoEnElaboracion(get_mysql_db(), data['ID'])
         return response.json("SUCCESS", 200)
     except Exception as e:
         logger.debug(e)
         return response.json("ERROR", 400)
 
+async def eliminaPedidoEnElaboracion(db, idPedido):
+    c = db.cursor()
+    sql = """DELETE FROM `totales_parciales_pedidoos_en_elaboracion` WHERE id_pedido = \'{id_Pedido}\'
+            """.format(id_Pedido=idPedido)
+    
+    c.execute(sql)
+    db.commit()
 
 @app.route('/get/pedidos', ["POST","GET"])
 # @compress.compress
@@ -2507,7 +2567,108 @@ async def totales_pedido(db, idPedido, origenPedido):
                 'tipoCambio':tipoCambio.getvalue(),
                 'descPreEmpaque': descPreEmpaque.getvalue(),
                 'porcVol': porcVol.getvalue(),
-                'porcPP': porcPP.getvalue()
+                'porcPP': porcPP.getvalue(),
+                'descInternet': descInternet.getvalue(),
+                'porcInternet' : porcInternet.getvalue()
+        }
+
+        await UpdTotalpedidoEnElaboracion(get_mysql_db(),idPedido,total.getvalue())
+
+        return obj
+    except Exception as e:
+        logger.debug(e)
+        return e
+
+async def UpdTotalpedidoEnElaboracion(db, id_pedido, total):
+    c = db.cursor()
+    sql = """UPDATE `totales_parciales_pedidoos_en_elaboracion` SET `total`=\'{total}\' WHERE `id_pedido` = \'{pedido}\'
+            """.format(total=total,pedido=id_pedido)
+    c.execute(sql)
+    db.commit()
+
+@app.route('/totales_factura', ["POST", "GET"])
+# @compress.compress
+@doc.exclude(True)
+# #@jwt_required
+# async def totales(request): # token: Token):
+# #@jwt_required
+async def totalesFactura(request):
+
+    data = request.json
+    db = get_oracle_db()
+    list = await totales_factura(db, data['pNoCia'],data['pNoFisico'] )
+
+    pool.release(db)
+    return response.json({"msj": "OK", "totales": list}, 200)
+
+async def totales_factura(db, pCia, pNoFisico):
+
+    try:
+        # db = get_oracle_db()
+        c = db.cursor()
+
+        descVol=c.var(int)
+        descDpp=c.var(int)
+        desPreEmp=c.var(int)
+        desCom=c.var(int)
+        subTotExe=c.var(int)
+        subTotGrav=c.var(int)
+        iva=c.var(int)
+        totalBs=c.var(int)
+        totalUsd=c.var(int)
+        anulada =c.var(str)
+        tipoCambio=c.var(str)
+        unidades=c.var(int)
+        porcCom =c.var(int)
+        porcVol =c.var(int)
+        porcDpp =c.var(int)
+        porcImp =c.var(int)
+        porcInternet =c.var(int)
+        descInternet =c.var(int)
+
+
+        l_result = c.callproc("""PROCESOSPW.totales_factura""",[
+            pCia,
+            pNoFisico,
+            descVol,
+            descDpp,
+            desPreEmp,
+            desCom,
+            subTotExe,
+            subTotGrav,
+            iva,
+            totalBs,
+            totalUsd,
+            anulada ,
+            tipoCambio,
+            unidades,
+            porcCom ,
+            porcVol ,
+            porcDpp ,
+            porcImp ,
+            porcInternet ,
+            descInternet 
+            ])[0]
+
+        obj = {
+                'descVol': descVol.getvalue(), 
+                'descDpp': descDpp.getvalue(), 
+                'desPreEmp': desPreEmp.getvalue(),   
+                'desCom': desCom.getvalue(),  
+                'subTotExe': subTotExe.getvalue(),   
+                'subTotGrav': subTotGrav.getvalue(),  
+                'iva': iva.getvalue(), 
+                'totalBs': totalBs.getvalue(), 
+                'totalUsd': totalUsd.getvalue(),    
+                'anulada': anulada.getvalue(),     
+                'tipoCambio': tipoCambio.getvalue(),  
+                'unidades': unidades.getvalue(),    
+                'porcCom': porcCom.getvalue(),     
+                'porcVol': porcVol.getvalue(),     
+                'porcDpp': porcDpp.getvalue(),     
+                'porcImp': porcImp.getvalue(),     
+                'porcInternet': porcInternet.getvalue(),    
+                'descInternet': descInternet.getvalue()    
         }
 
         return obj
@@ -2666,5 +2827,5 @@ def formatFloatDdo(value):
     return x
 
 ssl = {'cert': 'conf/ssl.crt/server.crt', 'key': 'conf/ssl.key/sever.key'}
-app.run(host='0.0.0.0', port= port, debug = False, workers=workers)
+app.run(host='0.0.0.0', port= port, debug = True, workers=workers)
 # app.run(host='0.0.0.0', port = port, debug = False, ssl=ssl)
